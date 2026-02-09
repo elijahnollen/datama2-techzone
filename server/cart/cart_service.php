@@ -53,7 +53,7 @@ function cartClear(array &$cart): void {
 function cartTotal(array $cart): float {
     $total = 0.0;
     foreach ($cart['items'] as $item) {
-        $total += ((float)$item['unit_price'] * (int)$item['qty');
+        $total += ((float)$item['unit_price'] * (int)$item['qty']);
     }
     return $total;
 }
