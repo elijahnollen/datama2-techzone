@@ -1,0 +1,1 @@
+[2026-02-10 11:47:20] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminAmiel@techzone.com"}
