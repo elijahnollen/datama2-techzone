@@ -9,13 +9,14 @@
           v-model="email" 
           type="email" 
           placeholder="admin@techzone.com" 
-          class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm"
+          class="mt-1 block w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          @keyup.enter="handleLogin"
         />
       </div>
 
       <button 
         @click="handleLogin" 
-        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition font-bold"
       >
         Sign In
       </button>
@@ -29,14 +30,25 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'; // Import if you have a router set up
 
+const router = useRouter();
 const email = ref('');
 const message = ref('');
 const messageClass = ref('');
 
 const handleLogin = async () => {
+  if (!email.value) {
+    message.value = "Please enter an email address.";
+    messageClass.value = 'text-red-600';
+    return;
+  }
+
   try {
-    const response = await fetch('https://silver-lamp-v69vvw49gv7gc667q-3000.app.github.dev/api/admin-check', {
+    // UPDATED URL: Match your active Codespaces backend
+    const backendUrl = 'https://probable-rotary-phone-97r99wvr6vpwh79r4-3000.app.github.dev';
+    
+    const response = await fetch(`${backendUrl}/api/admin-check`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email.value })
@@ -45,15 +57,19 @@ const handleLogin = async () => {
     const data = await response.json();
 
     if (data.isAdmin) {
-      message.value = `Welcome back, ${data.role}! Access Granted.`;
+      // Forensic Audit: Server-side validation succeeded
+      message.value = `Access Granted! Welcome, ${data.name}.`;
       messageClass.value = 'text-green-600';
-      // Redirect logic for your Vue Router would go here
+      
+      // Navigate to your admin dashboard after a short delay
+      // router.push('/admin-dashboard'); 
     } else {
-      message.value = "Access Denied: You do not have Admin privileges.";
+      message.value = data.message || "Access Denied: Invalid Admin credentials.";
       messageClass.value = 'text-red-600';
     }
   } catch (error) {
-    message.value = "Connection Error: Is the server running?";
+    console.error("Login connection error:", error);
+    message.value = "Server is offline. Please check your backend terminal.";
     messageClass.value = 'text-red-600';
   }
 };
