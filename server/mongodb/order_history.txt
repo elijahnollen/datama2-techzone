@@ -1,0 +1,26 @@
+use techzone;
+
+// order_history - Read-optimized snapshot of orders
+// FK Reference: saleID from Sale, customerID from Customer in ERD
+db.order_history.insertMany([
+  {
+    historyID: 1,
+    saleID: 1,
+    customerID: 1,
+    order_snapshot: {"order_num": "TZ-001", "date": "2024-01-15", "items": [{"id": 1, "name": "Mouse", "qty": 1, "price": 2499}], "total": 2649},
+    order_status: "Delivered",
+    tracking_number: "JT123456789",
+    courier_name: "J&T Express",
+    estimated_delivery: new Date("2024-01-20")
+  },
+  {
+    historyID: 2,
+    saleID: 2,
+    customerID: 2,
+    order_snapshot: {"order_num": "TZ-002", "date": "2024-01-18", "items": [{"id": 3, "name": "SSD", "qty": 1, "price": 5499}], "total": 5649},
+    order_status: "Shipped",
+    tracking_number: "LBC987654",
+    courier_name: "LBC",
+    estimated_delivery: new Date("2024-01-25")
+  }
+]);

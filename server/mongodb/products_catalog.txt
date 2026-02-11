@@ -1,0 +1,61 @@
+use techzone;
+
+// products_catalog - Extends MySQL Product table with marketing details
+// FK Reference: productID from Product table in ERD (UNIQUE 1:1)
+db.products_catalog.insertMany([
+  {
+    catalogID: 1,
+    productID: 1,
+    display_title: "Logitech G502 HERO - Pro Gaming Mouse PH",
+    description: "<p>Advanced gaming sensor with customizable weight system. Perfect for competitive gaming.</p>",
+    category: "Peripherals",
+    tags: ["gaming-mouse", "logitech", "wired"],
+    primary_image_url: "/img/g502-hero.jpg",
+    gallery_images: ["/img/g502-side.jpg", "/img/g502-top.jpg"],
+    tech_specs: {"Sensor": "HERO 25K", "DPI": "100-25600", "Buttons": "11"}
+  },
+  {
+    catalogID: 2,
+    productID: 2,
+    display_title: "Corsair K70 RGB - Mechanical Gaming Keyboard",
+    description: "<p>Cherry MX switches with per-key RGB. Aluminum build quality.</p>",
+    category: "Peripherals",
+    tags: ["keyboard", "mechanical", "rgb"],
+    primary_image_url: "/img/k70-front.jpg",
+    gallery_images: ["/img/k70-lit.jpg"],
+    tech_specs: {"Switches": "Cherry MX Red", "Backlight": "RGB", "Frame": "Aluminum"}
+  },
+  {
+    catalogID: 3,
+    productID: 3,
+    display_title: "Samsung 970 EVO Plus 1TB - Fast NVMe Storage",
+    description: "<p>High-speed NVMe drive for fast boot and load times.</p>",
+    category: "Storage",
+    tags: ["ssd", "nvme", "samsung"],
+    primary_image_url: "/img/samsung-970.jpg",
+    gallery_images: [],
+    tech_specs: {"Capacity": "1TB", "Read": "3500 MB/s", "Write": "3300 MB/s"}
+  },
+  {
+    catalogID: 4,
+    productID: 4,
+    display_title: "ASUS ROG B550-F - AMD Gaming Motherboard",
+    description: "<p>PCIe 4.0 ready with dual M.2 slots for next-gen builds.</p>",
+    category: "Motherboard",
+    tags: ["motherboard", "amd", "b550"],
+    primary_image_url: "/img/asus-b550.jpg",
+    gallery_images: ["/img/asus-b550-io.jpg"],
+    tech_specs: {"Socket": "AM4", "Chipset": "B550", "RAM": "DDR4"}
+  },
+  {
+    catalogID: 5,
+    productID: 5,
+    display_title: "Cooler Master Hyper 212 RGB - CPU Cooler",
+    description: "<p>Affordable tower cooler with RGB lighting and solid cooling.</p>",
+    category: "Cooling",
+    tags: ["cpu-cooler", "rgb", "tower"],
+    primary_image_url: "/img/hyper212.jpg",
+    gallery_images: [],
+    tech_specs: {"Fan": "120mm", "Pipes": "4", "TDP": "180W"}
+  }
+]);

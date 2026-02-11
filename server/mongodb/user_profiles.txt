@@ -1,0 +1,36 @@
+use techzone;
+
+// user_profiles - Extended Profile data for customers
+// FK Reference: customerID from Customer table in ERD (UNIQUE 1:1)
+db.user_profiles.insertMany([
+  {
+    profileID: 1,
+    customerID: 1,
+    profile_avatar_url: "/avatars/user1.png",
+    preferences: {"theme": "dark", "notifications": true, "language": "en"},
+    wishlist: [1, 3, 4],
+    saved_addresses: [{"label": "Home", "street": "123 Rizal St", "city": "Manila", "zip": "1000"}],
+    birthdate: new Date("1995-06-15"),
+    gender: "Male"
+  },
+  {
+    profileID: 2,
+    customerID: 2,
+    profile_avatar_url: "/avatars/user2.png",
+    preferences: {"theme": "light", "notifications": false, "language": "en"},
+    wishlist: [2, 5],
+    saved_addresses: [{"label": "Work", "street": "456 Quezon Ave", "city": "QC", "zip": "1101"}],
+    birthdate: new Date("1992-03-22"),
+    gender: "Female"
+  },
+  {
+    profileID: 3,
+    customerID: 3,
+    profile_avatar_url: null,
+    preferences: {"theme": "dark", "notifications": true, "language": "en"},
+    wishlist: [],
+    saved_addresses: [{"label": "Home", "street": "789 Taft Ave", "city": "Manila", "zip": "1004"}],
+    birthdate: new Date("1998-11-08"),
+    gender: "Male"
+  }
+]);

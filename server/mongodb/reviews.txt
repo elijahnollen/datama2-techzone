@@ -1,0 +1,36 @@
+use techzone;
+
+// reviews - User ratings and feedback
+// FK Reference: productID from Product, customerID from Customer in ERD
+db.reviews.insertMany([
+  {
+    reviewID: 1,
+    productID: 1,
+    customerID: 1,
+    rating: 5,
+    review_text: "Excellent mouse for FPS games. Very precise and comfortable.",
+    media_urls: ["/uploads/review1.jpg"],
+    is_verified: true,
+    created_at: new Date("2024-01-25T10:30:00Z")
+  },
+  {
+    reviewID: 2,
+    productID: 3,
+    customerID: 2,
+    rating: 4,
+    review_text: "Fast SSD, boots Windows in seconds. Great value!",
+    media_urls: [],
+    is_verified: true,
+    created_at: new Date("2024-01-28T09:15:00Z")
+  },
+  {
+    reviewID: 3,
+    productID: 2,
+    customerID: 3,
+    rating: 5,
+    review_text: "Best keyboard I ever bought. Cherry switches are smooth.",
+    media_urls: [],
+    is_verified: false,
+    created_at: new Date("2024-02-10T15:00:00Z")
+  }
+]);

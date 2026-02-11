@@ -1,0 +1,28 @@
+use techzone;
+
+// return_requests - RMA requests before official return_transaction
+// FK Reference: sale_itemID from sale_item, customerID from Customer in ERD
+db.return_requests.insertMany([
+  {
+    requestID: 1,
+    sale_itemID: 15,
+    customerID: 2,
+    reason_category: "Defective",
+    reason_details: "SSD not detected. Tried multiple slots.",
+    evidence_files: ["/rma/ssd_issue1.jpg", "/rma/ssd_issue2.jpg"],
+    request_status: "Approved",
+    admin_notes: "Defective confirmed. Replacement sent. RMA-001",
+    requested_at: new Date("2024-01-30T10:15:00Z")
+  },
+  {
+    requestID: 2,
+    sale_itemID: 23,
+    customerID: 1,
+    reason_category: "Damaged in Transit",
+    reason_details: "Box arrived crushed with broken parts.",
+    evidence_files: ["/rma/damage1.jpg"],
+    request_status: "Pending",
+    admin_notes: "Awaiting courier report.",
+    requested_at: new Date("2026-02-10T09:20:00Z")
+  }
+]);

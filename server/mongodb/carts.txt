@@ -1,0 +1,30 @@
+use techzone;
+
+// carts - Persisted shopping cart sessions
+// FK Reference: customerID from Customer, productID from Product in ERD
+db.carts.insertMany([
+  {
+    cartID: 1,
+    customerID: 1,
+    productID: 2,
+    quantity: 1,
+    added_at: new Date("2026-02-10T14:30:00Z"),
+    session_token: null
+  },
+  {
+    cartID: 2,
+    customerID: 2,
+    productID: 4,
+    quantity: 2,
+    added_at: new Date("2026-02-09T18:20:00Z"),
+    session_token: null
+  },
+  {
+    cartID: 3,
+    customerID: null,
+    productID: 5,
+    quantity: 1,
+    added_at: new Date("2026-02-11T10:45:00Z"),
+    session_token: "guest_xyz789"
+  }
+]);

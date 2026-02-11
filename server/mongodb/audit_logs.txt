@@ -1,0 +1,50 @@
+use techzone;
+
+// audit_logs - Tracks sensitive administrative actions
+// FK Reference: employeeID from Employee table in ERD
+db.audit_logs.insertMany([
+  {
+    logID: 1,
+    employeeID: 1,
+    action_type: "UPDATE",
+    table_affected: "product",
+    recordID: 3,
+    old_value: {"selling_price": 5999.00, "quantity": 15},
+    new_value: {"selling_price": 5499.00, "quantity": 15},
+    ip_address: "192.168.1.100",
+    timestamp: new Date("2024-01-18T09:30:00Z")
+  },
+  {
+    logID: 2,
+    employeeID: 2,
+    action_type: "INSERT",
+    table_affected: "supplier",
+    recordID: 8,
+    old_value: null,
+    new_value: {"supplierID": 8, "supplier_name": "TechHub Inc", "contact": "02-8765-4321"},
+    ip_address: "192.168.1.105",
+    timestamp: new Date("2024-01-20T14:15:00Z")
+  },
+  {
+    logID: 3,
+    employeeID: 1,
+    action_type: "DELETE",
+    table_affected: "damaged_goods",
+    recordID: 3,
+    old_value: {"damaged_recordID": 3, "productID": 12, "source": "Return", "notes": "Scratched"},
+    new_value: null,
+    ip_address: "192.168.1.100",
+    timestamp: new Date("2024-01-25T11:45:00Z")
+  },
+  {
+    logID: 4,
+    employeeID: 3,
+    action_type: "LOGIN_FAIL",
+    table_affected: "employee",
+    recordID: 7,
+    old_value: {"attempt": "Invalid password"},
+    new_value: {"attempts": 3},
+    ip_address: "203.177.45.89",
+    timestamp: new Date("2026-02-09T08:15:00Z")
+  }
+]);

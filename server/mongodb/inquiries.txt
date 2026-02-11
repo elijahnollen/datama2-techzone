@@ -1,0 +1,39 @@
+use techzone;
+
+// inquiries - Contact Us form submissions
+// FK Reference: customerID from Customer (nullable), assigned_to from Employee in ERD
+db.inquiries.insertMany([
+  {
+    inquiryID: 1,
+    customerID: 1,
+    visitor_name: "Juan Cruz",
+    visitor_email: "juan@email.com",
+    subject: "Motherboard compatibility question",
+    message_body: "Will B550 work with Ryzen 5000 without BIOS update?",
+    inquiry_status: "Resolved",
+    assigned_to: 1,
+    created_at: new Date("2024-01-12T14:20:00Z")
+  },
+  {
+    inquiryID: 2,
+    customerID: null,
+    visitor_name: "Carlos M",
+    visitor_email: "carlos@yahoo.com",
+    subject: "Bulk order pricing",
+    message_body: "Need quote for 10 gaming mice. Do you offer discounts?",
+    inquiry_status: "In Progress",
+    assigned_to: 2,
+    created_at: new Date("2026-02-09T11:30:00Z")
+  },
+  {
+    inquiryID: 3,
+    customerID: 3,
+    visitor_name: "Pedro R",
+    visitor_email: "pedro@gmail.com",
+    subject: "Payment plans available?",
+    message_body: "Can I pay in installments for PC build?",
+    inquiry_status: "New",
+    assigned_to: null,
+    created_at: new Date("2026-02-11T10:05:00Z")
+  }
+]);
