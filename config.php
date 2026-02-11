@@ -12,4 +12,4 @@ define('SUPABASE_KEY', $env['SUPABASE_KEY']);
 if (!SUPABASE_URL || !SUPABASE_KEY) {
     error_log("[FORENSIC ALERT] .env file is missing or keys are not set.");
 }
-?>
+
