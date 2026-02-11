@@ -7,6 +7,15 @@ header("Access-Control-Allow-Headers: Content-Type");
 require_once 'config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
+// --- AUDIT LOG FUNCTION ---
+function logAction($message) {
+    $logFile = 'audit_log.txt';
+    $timestamp = date("Y-m-d H:i:s");
+    $entry = "[$timestamp] $message" . PHP_EOL;
+    // FILE_APPEND ensures we don't overwrite previous logs
+    file_put_contents($logFile, $entry, FILE_APPEND);
+}
+
 $data = json_decode(file_get_contents("php://input"));
 
 if (!empty($data->email) && !empty($data->password)) {
@@ -33,17 +42,25 @@ if (!empty($data->email) && !empty($data->password)) {
     }
 
     if ($user) {
-        // Changed from password_verify() to a simple string comparison
         if ($password === $user->password) {
+            $role = ($foundTable === 'employee') ? $user->employee_role : 'customer';
+            
+            // LOG SUCCESS
+            logAction("SUCCESSFUL LOGIN: User [$email] signed in as [$role]");
+
             echo json_encode([
                 "success" => true,
                 "message" => "Login successful",
-                "role" => ($foundTable === 'employee') ? $user->employee_role : 'customer'
+                "role" => $role
             ]);
         } else {
+            // LOG WRONG PASSWORD
+            logAction("FAILED LOGIN: User [$email] provided incorrect password");
             echo json_encode(["success" => false, "message" => "Invalid password"]);
         }
     } else {
+        // LOG USER NOT FOUND
+        logAction("FAILED LOGIN: Attempted login for non-existent user [$email]");
         echo json_encode(["success" => false, "message" => "User not found"]);
     }
 }
