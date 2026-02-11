@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechZone API Tester</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f9; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        input, select, button { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        input { flex-grow: 1; }
+        button { background: #06b6d4; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0891b2; }
+        .product-card { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .product-card:last-child { border: none; }
+        .price { color: #059669; font-weight: bold; }
+        .debug-box { background: #272727; color: #34d399; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; overflow-x: auto; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>TechZone Product API Tester</h2>
+    
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search for a specific item (e.g. Keyboard)">
+        <select id="categorySelect">
+            <option value="">All Categories</option>
+            <option value="Peripherals">Peripherals</option>
+            <option value="Components">Components</option>
+            <option value="Laptops">Laptops</option>
+        </select>
+        <button onclick="testApi()">Fetch Products</button>
+    </div>
+
+    <div id="results">
+        <p>Results will appear here...</p>
+    </div>
+
+    <h4>Raw JSON Response (Forensic View):</h4>
+    <div id="debug" class="debug-box">Waiting for request...</div>
+</div>
+
+<script>
+    // REPLACE THIS WITH YOUR ACTUAL CODESPACE URL
+    const API_URL = "https://symmetrical-spoon-4j577645qxwxc6gq-8000.app.github.dev/api/products.php";
+
+    async function testApi() {
+        const search = document.getElementById('searchInput').value;
+        const category = document.getElementById('categorySelect').value;
+        const resultsDiv = document.getElementById('results');
+        const debugDiv = document.getElementById('debug');
+
+        // Construct URL with parameters
+        let url = `${API_URL}?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`;
+        
+        try {
+            debugDiv.innerText = `Requesting: ${url}...`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            // Show raw JSON for debugging
+            debugDiv.innerText = JSON.stringify(data, null, 2);
+
+            // Render HTML cards
+            resultsDiv.innerHTML = "";
+            if (data.length === 0) {
+                resultsDiv.innerHTML = "<p>No specific items found.</p>";
+            } else {
+                data.forEach(product => {
+                    resultsDiv.innerHTML += `
+                        <div class="product-card">
+                            <strong>${product.product_name}</strong><br>
+                            <span class="price">$${product.price}</span> | 
+                            <small>Category: ${product.category}</small>
+                        </div>
+                    `;
+                });
+            }
+        } catch (error) {
+            debugDiv.innerText = "Error: " + error.message;
+            resultsDiv.innerHTML = "<p style='color:red;'>Failed to connect to backend. Check CORS and URL.</p>";
+        }
+    }
+</script>
+
+</body>
+</html>
