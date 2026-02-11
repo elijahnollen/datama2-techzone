@@ -1,5 +1,4 @@
 <?php
-// api/refunds.php
 require_once '../config.php';
 
 header("Access-Control-Allow-Origin: *");
@@ -12,10 +11,9 @@ header("Content-Type: application/json");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-// --- GET: List all 'pending' refund requests ---
+// --- GET: List all refund requests (Admin view) ---
 if ($method === 'GET') {
-    // FIXED: Changed 'refund_requests' to 'refund_request'
-    $url = SUPABASE_URL . "/rest/v1/refund_request?select=*&status=eq.pending";
+    $url = SUPABASE_URL . "/rest/v1/refund_request?select=*"; // Removed filter to see everything
     
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -29,7 +27,29 @@ if ($method === 'GET') {
     echo $response;
 }
 
-// --- PATCH: Accept or Reject a refund request ---
+// --- POST: Customer submits a new refund request ---
+if ($method === 'POST') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    // We force status to 'pending' because the customer can't 'accept' their own refund
+    $data['status'] = 'pending'; 
+
+    $ch = curl_init(SUPABASE_URL . "/rest/v1/refund_request");
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "apikey: " . SUPABASE_KEY,
+        "Authorization: Bearer " . SUPABASE_KEY,
+        "Content-Type: application/json"
+    ]);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+    echo $response;
+}
+
+// --- PATCH: Admin accepts or rejects a refund request ---
 if ($method === 'PATCH') {
     $data = json_decode(file_get_contents('php://input'), true);
     $refund_id = $data['id'] ?? null;
@@ -40,7 +60,6 @@ if ($method === 'PATCH') {
         exit;
     }
 
-    // FIXED: Changed 'refund_requests' to 'refund_request'
     $url = SUPABASE_URL . "/rest/v1/refund_request?id=eq." . $refund_id;
     
     $ch = curl_init($url);
@@ -56,8 +75,5 @@ if ($method === 'PATCH') {
     
     $response = curl_exec($ch);
     curl_close($ch);
-
-    error_log("[REFUND UPDATE]: ID #$refund_id set to $new_status at " . date('Y-m-d H:i:s'));
-    
     echo $response;
 }

@@ -1,15 +1,11 @@
 <?php
 // config.php
+$env = parse_ini_file(__DIR__ . '/.env'); // Using __DIR__ helps PHP find the file
 
-// This parses your .env file into an array
-$env = parse_ini_file('.env');
+define('SUPABASE_URL', $env['SUPABASE_URL'] ?? 'https://puqivchxbvszeyigjvmj.supabase.co');
+define('SUPABASE_KEY', $env['SUPABASE_KEY'] ?? 'sb_publishable_HqwyeJjwnsbbeiSYWCafsQ_vLOBpR2u');
 
-// Define constants for use in your login scripts
-define('SUPABASE_URL', $env['SUPABASE_URL']);
-define('SUPABASE_KEY', $env['SUPABASE_KEY']);
-
-// Verification (Internal only, won't show on the website)
-if (!SUPABASE_URL || !SUPABASE_KEY) {
-    error_log("[FORENSIC ALERT] .env file is missing or keys are not set.");
+if (!SUPABASE_URL) {
+    error_log("[FORENSIC ALERT] Supabase URL is still missing!");
 }
 ?>
