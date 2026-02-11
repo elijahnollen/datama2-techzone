@@ -1,37 +1,50 @@
 <?php
-// ... keep your existing headers and logAction function ...
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
 
-$data = json_decode(file_get_contents("php://input"));
+require_once 'config.php';
 
-if (!empty($data->email) && !empty($data->password)) {
-    $email = trim($data->email);
-    $password = $data->password;
-    // Capture the Remember Me flag from the design
-    $rememberMe = isset($data->rememberMe) && $data->rememberMe ? true : false;
+$data = json_decode(file_get_contents("php://input"), true);
 
-    // ... (Your existing table loop logic to find the user) ...
+if (!empty($data['email']) && !empty($data['password'])) {
+    $email = trim($data['email']);
+    $password = $data['password'];
 
-    if ($user) {
-        if ($password === $user->password) {
-            $role = ($foundTable === 'employee') ? $user->employee_role : 'customer';
-            
-            // LOG SUCCESS with persistence detail
-            $logMsg = "SUCCESSFUL LOGIN: User [$email] as [$role]";
-            if ($rememberMe) $logMsg .= " (Remember Me enabled)";
-            logAction($logMsg);
+    // FIXED: Changed 'email' to 'email_address' to match your Supabase column
+    $queryUrl = SUPABASE_URL . "/rest/v1/employee?email_address=eq." . urlencode($email) . "&select=*";
 
+    $ch = curl_init($queryUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "apikey: " . SUPABASE_KEY,
+        "Authorization: Bearer " . SUPABASE_KEY
+    ]);
+
+    $response = curl_exec($ch);
+    $result = json_decode($response, true); 
+    curl_close($ch);
+
+    if (!empty($result) && isset($result[0])) {
+        $user = $result[0]; 
+        
+        if ($password === $user['password']) {
+            logAction("SUCCESS: Admin Login [$email]");
             echo json_encode([
-                "success" => true,
-                "message" => "Login successful",
-                "role" => $role,
-                "persist" => $rememberMe // Functionally tells the system to stay logged in
+                "success" => true, 
+                "message" => "Login successful", 
+                "name" => $user['employee_name'] ?? "Admin"
             ]);
         } else {
-            logAction("FAILED LOGIN: User [$email] - Incorrect password");
-            echo json_encode(["success" => false, "message" => "Invalid password"]);
+            logAction("FAILURE: Admin [$email] - Wrong Pass");
+            http_response_code(401);
+            echo json_encode(["success" => false, "message" => "Invalid Password"]);
         }
     } else {
-        logAction("FAILED LOGIN: Non-existent user [$email]");
-        echo json_encode(["success" => false, "message" => "User not found"]);
+        logAction("FAILURE: Admin [$email] - Not Found");
+        http_response_code(404);
+        echo json_encode(["success" => false, "message" => "User not found in Employee table"]);
     }
+} else {
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Missing Input"]);
 }

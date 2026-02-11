@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TechZone Unified Auth Tester</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .login-card { background: white; padding: 30px; border-radius: 12px; width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 6px solid #2563eb; }
+        .role-toggle { display: flex; background: #eee; border-radius: 8px; margin-bottom: 20px; padding: 4px; }
+        .role-btn { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; background: transparent; color: #666; }
+        .role-btn.active { background: white; color: #2563eb; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { margin: 0 0 10px; color: #1a1a1a; text-align: center; }
+        label { display: block; font-size: 14px; margin-bottom: 5px; color: #444; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        button { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-primary { background: #2563eb; color: white; grid-column: span 2; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-sub { background: #f3f4f6; color: #4b5563; font-size: 12px; }
+        .btn-sub:hover { background: #e5e7eb; }
+        .response-container { margin-top: 20px; }
+        .response-label { font-size: 12px; color: #888; margin-bottom: 5px; }
+        .response-box { background: #1e1e1e; color: #4ade80; padding: 15px; font-family: 'Consolas', monospace; font-size: 12px; border-radius: 6px; min-height: 80px; overflow-x: auto; white-space: pre-wrap; }
+        .admin-theme { border-top-color: #06b6d4; }
+    </style>
+</head>
+<body>
+
+<div class="login-card" id="card">
+    <h2 id="title">Customer Login</h2>
+    
+    <div class="role-toggle">
+        <button class="role-btn active" id="btnCust" onclick="setRole('customer')">Customer</button>
+        <button class="role-btn" id="btnAdmin" onclick="setRole('admin')">Admin/Employee</button>
+    </div>
+
+    <label>Email Address</label>
+    <input type="email" id="email" placeholder="email@techzone.com">
+    
+    <label>Password</label>
+    <input type="password" id="password" placeholder="••••••••">
+
+    <div class="actions">
+        <button class="btn-primary" onclick="submitAuth('login')">Sign In</button>
+        <button class="btn-sub" id="regBtn" onclick="submitAuth('register')">Register</button>
+        <button class="btn-sub" onclick="submitAuth('forgot')">Forgot Password</button>
+        <button class="btn-sub" style="grid-column: span 2;" onclick="submitAuth('logout')">Log Out (Record Exit)</button>
+    </div>
+
+    <div class="response-container">
+        <div class="response-label">Backend Response (Forensic Log Status):</div>
+        <div class="response-box" id="response">Ready for authentication...</div>
+    </div>
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    const BASE_URL = window.location.origin + "/";
+    let currentRole = 'customer';
+
+    function setRole(role) {
+        currentRole = role;
+        const card = document.getElementById('card');
+        const title = document.getElementById('title');
+        const regBtn = document.getElementById('regBtn');
+        
+        // Update UI styling
+        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+        if(role === 'admin') {
+            document.getElementById('btnAdmin').classList.add('active');
+            card.classList.add('admin-theme');
+            title.innerText = "Admin Portal";
+            regBtn.style.display = "none"; // Admins don't usually self-register
+        } else {
+            document.getElementById('btnCust').classList.add('active');
+            card.classList.remove('admin-theme');
+            title.innerText = "Customer Login";
+            regBtn.style.display = "block";
+        }
+    }
+
+    async function submitAuth(action) {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const resBox = document.getElementById('response');
+        
+        // Map action to specific PHP files
+        let endpoint = '';
+        if (action === 'login') endpoint = (currentRole === 'admin') ? 'login.php' : 'customer-login.php';
+        if (action === 'register') endpoint = 'register.php';
+        if (action === 'logout') endpoint = 'logout.php';
+        if (action === 'forgot') endpoint = 'forgot_password.php';
+
+        resBox.innerText = `Connecting to ${endpoint}...`;
+
+        try {
+            const response = await fetch(BASE_URL + endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            resBox.innerText = JSON.stringify(data, null, 2);
+        } catch (err) {
+            resBox.innerText = "Error: " + err.message + "\nCheck if Port 8000 is Public.";
+        }
+    }
+</script>
+
+</body>
+</html>

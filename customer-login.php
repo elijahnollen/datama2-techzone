@@ -1,53 +1,51 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
 
-// Pulls in your Supabase URL and Key from the .env
 require_once 'config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
+$data = json_decode(file_get_contents("php://input"), true);
 
-$data = json_decode(file_get_contents("php://input"));
+if (!empty($data['email']) && !empty($data['password'])) {
+    $email = trim($data['email']);
+    $password = $data['password'];
 
-if (!empty($data->email) && !empty($data->password)) {
-    $email = trim($data->email);
-    $password = $data->password;
+    // Search query specifically using email_address as confirmed
+    $queryUrl = SUPABASE_URL . "/rest/v1/customer?email_address=eq." . urlencode($email) . "&select=*";
 
-    // Use .ilike for case-insensitive email matching
-    $queryUrl = SUPABASE_URL . "/rest/v1/customer?email_address=ilike." . urlencode($email) . "&password=eq." . urlencode($password) . "&select=customer_name";
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $queryUrl);
+    $ch = curl_init($queryUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "apikey: " . SUPABASE_KEY,
-        "Authorization: Bearer " . SUPABASE_KEY,
-        "Content-Type: application/json"
+        "Authorization: Bearer " . SUPABASE_KEY
     ]);
 
     $response = curl_exec($ch);
-    $result = json_decode($response);
+    $result = json_decode($response, true); 
     curl_close($ch);
 
-    if (!empty($result) && count($result) > 0) {
-        // --- REAL-TIME BASH FEEDBACK ---
-        error_log("\n[!] CUSTOMER LOGIN: Success");
-        error_log("[+] User: " . $email);
-        error_log("[+] STATUS: ACCESS GRANTED\n");
-
-        echo json_encode(["success" => true, "name" => $result[0]->customer_name]);
+    if (!empty($result) && isset($result[0])) {
+        $user = $result[0]; 
+        
+        // Plain text password comparison
+        if ($password === $user['password']) {
+            logAction("SUCCESS: Customer Login [$email]");
+            echo json_encode([
+                "success" => true, 
+                "message" => "Login successful", 
+                "name" => $user['customer_name'] ?? "Valued Customer"
+            ]);
+        } else {
+            logAction("FAILURE: Customer [$email] - Incorrect Password");
+            http_response_code(401);
+            echo json_encode(["success" => false, "message" => "Invalid password."]);
+        }
     } else {
-        // --- REAL-TIME BASH FEEDBACK ---
-        error_log("\n[!] CUSTOMER LOGIN: Attempt");
-        error_log("[-] Email: " . $email);
-        error_log("[-] STATUS: ACCESS DENIED\n");
-
-        http_response_code(401);
-        echo json_encode(["success" => false, "message" => "Invalid Credentials"]);
+        logAction("FAILURE: Customer [$email] - User Not Found");
+        http_response_code(404);
+        echo json_encode(["success" => false, "message" => "No account found with that email."]);
     }
 } else {
     http_response_code(400);
-    echo json_encode(["message" => "Incomplete login data"]);
+    echo json_encode(["success" => false, "message" => "Incomplete data provided."]);
 }
