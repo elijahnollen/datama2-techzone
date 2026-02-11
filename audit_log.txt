@@ -8,3 +8,17 @@
 [AUDIT LOG][2026-02-11 02:40:57] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminGian@techzone.com"}
 [AUDIT LOG][2026-02-11 02:49:02] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminGian@techzone.com"}
 [AUDIT LOG][2026-02-11 02:49:47] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminGian@techzone.com"}
+[AUDIT LOG][2026-02-11 02:57:18] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminGian@techzone.com"}
+[AUDIT LOG][2026-02-11 02:59:19] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminGian@techzone.com"}
+[AUDIT LOG][2026-02-11 02:59:45] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminGian@techzone.com"}
+[AUDIT LOG][2026-02-11 03:01:40] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminGian@techzone.com"}
+[AUDIT LOG][2026-02-11 03:01:40] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminGian@techzone.com"}
+[AUDIT LOG][2026-02-11 03:04:51] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminAmiel@techzone.com"}
+[AUDIT LOG][2026-02-11 03:04:51] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminAmiel@techzone.com"}
+[AUDIT LOG][2026-02-11 03:06:35] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminAmiel@techzone.com"}
+[AUDIT LOG][2026-02-11 03:07:26] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminAmiel@techzone.com"}
+[AUDIT LOG][2026-02-11 03:08:47] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminAmiel@techzone.com"}
+[AUDIT LOG][2026-02-11 03:17:30] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminElijah@techzone.com"}
+[AUDIT LOG][2026-02-11 03:17:54] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminJohn@techzone.com"}
+[AUDIT LOG][2026-02-11 03:18:08] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminAshton@techzone.com"}
+[AUDIT LOG][2026-02-11 03:18:29] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminChelsea@techzone.com"}
