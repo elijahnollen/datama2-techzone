@@ -1,74 +1,49 @@
 <?php
-// login.php (Root Folder)
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Content-Type");
 
-// --- BRING IN THE SECURE CONFIG ---
 require_once 'config.php';
-
-// Handle preflight requests for CORS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
-// --- AUDIT LOGGER ---
-function logAction($action, $details) {
-    $timestamp = date("Y-m-d H:i:s");
-    $logEntry = "[AUDIT LOG][$timestamp] ACTION: $action | DETAILS: " . json_encode($details) . PHP_EOL;
-    // Ensure audit_log.txt exists and is writable
-    file_put_contents("audit_log.txt", $logEntry, FILE_APPEND);
-    error_log($logEntry);
-}
-
-// --- HANDLE POST REQUEST ---
 $data = json_decode(file_get_contents("php://input"));
 
 if (!empty($data->email) && !empty($data->password)) {
     $email = trim($data->email);
     $password = $data->password;
 
-    $ch = curl_init();
-    
-    // CORRECTED: Using SUPABASE_URL constant and added /rest/v1 path
-    $url = SUPABASE_URL . "/rest/v1/employee?email_address=ilike." . urlencode($email) . "&password=eq." . urlencode($password) . "&select=employee_role,first_name";
+    $tables = ['employee', 'customer'];
+    $user = null;
+    $foundTable = '';
 
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "apikey: " . SUPABASE_KEY,
-        "Authorization: Bearer " . SUPABASE_KEY,
-        "Content-Type: application/json"
-    ]);
+    foreach ($tables as $table) {
+        $url = SUPABASE_URL . "/rest/v1/$table?email_address=eq." . urlencode($email) . "&select=*";
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["apikey: ".SUPABASE_KEY, "Authorization: Bearer ".SUPABASE_KEY]);
+        $response = json_decode(curl_exec($ch));
+        curl_close($ch);
 
-    $response = curl_exec($ch);
-    $result = json_decode($response);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+        if (is_array($response) && count($response) > 0) {
+            $user = $response[0];
+            $foundTable = $table;
+            break; 
+        }
+    }
 
-    // LOGIC CHECK
-    if ($http_code === 200 && !empty($result)) {
-        $user = $result[0];
-
-        // --- ROLE-BASED ACCESS CONTROL (RBAC) ---
-        if ($user->employee_role === 'admin') {
-            logAction("ADMIN_AUTH_SUCCESS", ["email" => $email]);
+    if ($user) {
+        // Changed from password_verify() to a simple string comparison
+        if ($password === $user->password) {
             echo json_encode([
-                "isAdmin" => true,
-                "name" => $user->first_name,
-                "role" => $user->employee_role
+                "success" => true,
+                "message" => "Login successful",
+                "role" => ($foundTable === 'employee') ? $user->employee_role : 'customer'
             ]);
         } else {
-            logAction("UNAUTHORIZED_ACCESS_ATTEMPT", ["email" => $email, "role" => $user->employee_role]);
-            http_response_code(403); 
-            echo json_encode(["isAdmin" => false, "message" => "Access Denied: Admins Only"]);
+            echo json_encode(["success" => false, "message" => "Invalid password"]);
         }
     } else {
-        logAction("LOGIN_FAILED", ["email" => $email]);
-        http_response_code(401);
-        echo json_encode(["isAdmin" => false, "message" => "Invalid Credentials"]);
+        echo json_encode(["success" => false, "message" => "User not found"]);
     }
-} else {
-    http_response_code(400);
-    echo json_encode(["message" => "Incomplete data"]);
 }
-?>
