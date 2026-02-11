@@ -1,1 +1,8 @@
 [2026-02-10 11:47:20] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminAmiel@techzone.com"}
+[AUDIT LOG][2026-02-11 02:17:23] ACTION: LOGIN_FAILED | DETAILS: {"email":"admin@techzone.com"}
+[AUDIT LOG][2026-02-11 02:19:25] ACTION: UNAUTHORIZED_ADMIN_ATTEMPT | DETAILS: {"email":"adminGian@techzone.com","role":"Admin"}
+[AUDIT LOG][2026-02-11 02:22:02] ACTION: UNAUTHORIZED_ADMIN_ATTEMPT | DETAILS: {"email":"adminGian@techzone.com","role":"Admin"}
+[AUDIT LOG][2026-02-11 02:34:47] ACTION: LOGIN_FAILED | DETAILS: {"email":"adminGian@techzone.com"}
+[AUDIT LOG][2026-02-11 02:40:15] ACTION: LOGIN_FAILED | DETAILS: {"email":"admin@techzone.com"}
+[AUDIT LOG][2026-02-11 02:40:31] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminGian@techzone.com"}
+[AUDIT LOG][2026-02-11 02:40:57] ACTION: ADMIN_AUTH_SUCCESS | DETAILS: {"email":"adminGian@techzone.com"}
