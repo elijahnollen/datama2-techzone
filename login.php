@@ -2,8 +2,8 @@
 // login.php (Root Folder)
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // --- BRING IN THE SECURE CONFIG ---
 require_once 'config.php';
@@ -26,9 +26,8 @@ if (!empty($data->email) && !empty($data->password)) {
     $password = $data->password;
 
     $ch = curl_init();
-    
-    // Using constants from config.php and path to employee table
-    $url = SUPABASE_URL . "/rest/v1/employee?email_address=ilike." . urlencode($email) . "&password=eq." . urlencode($password) . "&select=employee_role,first_name";
+    // ilike filter for case-insensitivity: column=ilike.value
+    $url = $supabase_url . "/employee?email_address=ilike." . urlencode($email) . "&password=eq." . urlencode($password) . "&select=employee_role,first_name";
 
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
