@@ -5,13 +5,17 @@
     <title>TechZone Unified Auth Tester</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .login-card { background: white; padding: 30px; border-radius: 12px; width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 6px solid #2563eb; }
+        .login-card { background: white; padding: 30px; border-radius: 12px; width: 420px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 6px solid #2563eb; transition: all 0.3s ease; }
         .role-toggle { display: flex; background: #eee; border-radius: 8px; margin-bottom: 20px; padding: 4px; }
         .role-btn { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; background: transparent; color: #666; }
         .role-btn.active { background: white; color: #2563eb; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         h2 { margin: 0 0 10px; color: #1a1a1a; text-align: center; }
-        label { display: block; font-size: 14px; margin-bottom: 5px; color: #444; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        label { display: block; font-size: 13px; margin-bottom: 5px; color: #444; font-weight: 600; }
+        input, textarea { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        
+        /* Registration specific styling */
+        #regFields { display: none; margin-top: 10px; border-top: 1px dashed #ddd; padding-top: 15px; }
+        
         .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         button { padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .btn-primary { background: #2563eb; color: white; grid-column: span 2; }
@@ -19,8 +23,8 @@
         .btn-sub { background: #f3f4f6; color: #4b5563; font-size: 12px; }
         .btn-sub:hover { background: #e5e7eb; }
         .response-container { margin-top: 20px; }
-        .response-label { font-size: 12px; color: #888; margin-bottom: 5px; }
-        .response-box { background: #1e1e1e; color: #4ade80; padding: 15px; font-family: 'Consolas', monospace; font-size: 12px; border-radius: 6px; min-height: 80px; overflow-x: auto; white-space: pre-wrap; }
+        .response-label { font-size: 11px; color: #888; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .response-box { background: #1e1e1e; color: #4ade80; padding: 15px; font-family: 'Consolas', monospace; font-size: 12px; border-radius: 6px; min-height: 80px; overflow-x: auto; white-space: pre-wrap; border: 1px solid #333; }
         .admin-theme { border-top-color: #06b6d4; }
     </style>
 </head>
@@ -34,6 +38,25 @@
         <button class="role-btn" id="btnAdmin" onclick="setRole('admin')">Admin/Employee</button>
     </div>
 
+    <div id="regFields">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+                <label>First Name</label>
+                <input type="text" id="firstName" placeholder="Juan">
+            </div>
+            <div>
+                <label>Last Name</label>
+                <input type="text" id="lastName" placeholder="Dela Cruz">
+            </div>
+        </div>
+        
+        <label>Phone Number</label>
+        <input type="text" id="phone" placeholder="0917-000-0000">
+
+        <label>Physical Address</label>
+        <textarea id="address" rows="2" placeholder="House No., Street, Brgy, City"></textarea>
+    </div>
+
     <label>Email Address</label>
     <input type="email" id="email" placeholder="email@techzone.com">
     
@@ -41,8 +64,9 @@
     <input type="password" id="password" placeholder="••••••••">
 
     <div class="actions">
-        <button class="btn-primary" onclick="submitAuth('login')">Sign In</button>
-        <button class="btn-sub" id="regBtn" onclick="submitAuth('register')">Register</button>
+        <button class="btn-primary" id="mainBtn" onclick="submitAuth('login')">Sign In</button>
+        <button class="btn-sub" id="regBtn" onclick="toggleRegisterMode()">Register</button>
+        <button class="btn-sub" id="cancelBtn" style="display:none;" onclick="toggleRegisterMode()">Cancel</button>
         <button class="btn-sub" onclick="submitAuth('forgot')">Forgot Password</button>
         <button class="btn-sub" style="grid-column: span 2;" onclick="submitAuth('logout')">Log Out (Record Exit)</button>
     </div>
@@ -54,23 +78,49 @@
 </div>
 
 <script>
-    // --- CONFIGURATION ---
     const BASE_URL = window.location.origin + "/";
     let currentRole = 'customer';
+    let isRegisterMode = false;
+
+    function toggleRegisterMode() {
+        isRegisterMode = !isRegisterMode;
+        const regFields = document.getElementById('regFields');
+        const mainBtn = document.getElementById('mainBtn');
+        const regBtn = document.getElementById('regBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const title = document.getElementById('title');
+
+        if (isRegisterMode) {
+            regFields.style.display = 'block';
+            mainBtn.innerText = 'Create Account';
+            mainBtn.onclick = () => submitAuth('register');
+            regBtn.style.display = 'none';
+            cancelBtn.style.display = 'block';
+            title.innerText = "Customer Registration";
+        } else {
+            regFields.style.display = 'none';
+            mainBtn.innerText = 'Sign In';
+            mainBtn.onclick = () => submitAuth('login');
+            regBtn.style.display = 'block';
+            cancelBtn.style.display = 'none';
+            title.innerText = "Customer Login";
+        }
+    }
 
     function setRole(role) {
+        if (isRegisterMode) toggleRegisterMode();
+        
         currentRole = role;
         const card = document.getElementById('card');
         const title = document.getElementById('title');
         const regBtn = document.getElementById('regBtn');
         
-        // Update UI styling
         document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
         if(role === 'admin') {
             document.getElementById('btnAdmin').classList.add('active');
             card.classList.add('admin-theme');
             title.innerText = "Admin Portal";
-            regBtn.style.display = "none"; // Admins don't usually self-register
+            regBtn.style.display = "none";
         } else {
             document.getElementById('btnCust').classList.add('active');
             card.classList.remove('admin-theme');
@@ -82,9 +132,12 @@
     async function submitAuth(action) {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
         const resBox = document.getElementById('response');
         
-        // Map action to specific PHP files
         let endpoint = '';
         if (action === 'login') endpoint = (currentRole === 'admin') ? 'login.php' : 'customer-login.php';
         if (action === 'register') endpoint = 'register.php';
@@ -93,16 +146,30 @@
 
         resBox.innerText = `Connecting to ${endpoint}...`;
 
+        const payload = { 
+            email, 
+            password,
+            first_name: firstName,
+            last_name: lastName,
+            phone_number: phone,
+            address: address,
+            role: currentRole 
+        };
+
         try {
             const response = await fetch(BASE_URL + endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify(payload)
             });
             const data = await response.json();
             resBox.innerText = JSON.stringify(data, null, 2);
+            
+            if (action === 'register' && data.success) {
+                setTimeout(() => toggleRegisterMode(), 3000);
+            }
         } catch (err) {
-            resBox.innerText = "Error: " + err.message + "\nCheck if Port 8000 is Public.";
+            resBox.innerText = "Error: " + err.message;
         }
     }
 </script>

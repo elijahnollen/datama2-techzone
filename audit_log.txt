@@ -46,3 +46,41 @@
 [2026-02-11 13:17:34] EMAIL ERROR: Could not send to [mandacgian0515@gmail.com]. Mailer Error: SMTP Error: Could not authenticate.
 [2026-02-11 13:18:22] FORGOT PASSWORD: Valid request for [mandacgian0515@gmail.com]. User found.
 [2026-02-11 13:20:10] FORGOT PASSWORD: Valid request for [mandacgian0515@gmail.com]. User found.
+[2026-02-12 05:51:10] SUCCESS: Customer Login [josh.g@gmail.com]
+[2026-02-12 05:51:42] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-12 05:51:47] LOGOUT: User [adminGian@techzone.com] has logged out.
+[2026-02-12 06:08:03] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-12 06:09:09] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-12 06:14:41] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-12 06:16:09] SUCCESS: Customer Login [josh.g@gmail.com]
+[2026-02-12 06:18:09] SUCCESS: Customer Login [josh.g@gmail.com]
+[2026-02-12 06:29:45] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-12 06:31:41] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-12 06:35:06] SUCCESS: Customer Login [josh.g@gmail.com]
+[2026-02-12 06:35:17] LOGOUT: User [josh.g@gmail.com] has logged out.
+[2026-02-12 06:36:32] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-12 06:36:35] FORGOT PASSWORD: Fail for [adminGian@techzone.com]. User not in database.
+[2026-02-12 06:36:47] FORGOT PASSWORD: Fail for [adminGian@techzone.com]. User not in database.
+[2026-02-12 06:38:37] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-12 06:42:23] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-12 06:50:39] SUCCESS: Customer Login [josh.g@gmail.com]
+[2026-02-12 07:07:36] FAILURE: Customer [josh.g@gmail.com] - User Not Found
+[2026-02-12 07:07:41] FAILURE: Customer [josh.g@gmail.com] - User Not Found
+[2026-02-12 07:10:43] FAILURE: Customer [josh.g@gmail.com] - Incorrect Password
+[2026-02-12 07:14:25] FAILURE: Customer [josh.g@gmail.com] - Incorrect Password
+[2026-02-12 07:14:28] FAILURE: Customer [josh.g@gmail.com] - Incorrect Password
+[2026-02-12 07:15:28] FAILURE: Customer [josh.g@gmail.com] - Incorrect Password
+[2026-02-12 07:17:08] SUCCESS: Customer Login [j.rizal@gmail.com] - Name: Jose Rizal
+[2026-02-12 07:18:36] REGISTRATION FAILURE: Could not create account for [j.rizal@gmail.com]. Error code: 409
+[2026-02-12 07:19:18] REGISTRATION SUCCESS: New customer account created for [milesmorales@gmail.com]
+[2026-02-12 07:20:17] LOGOUT: User [Unknown User] has logged out.
+[2026-02-12 07:23:10] SUCCESS: Customer Login [j.rizal@gmail.com] - Name: Jose Rizal
+[2026-02-12 07:23:12] LOGOUT: User [j.rizal@gmail.com] has logged out.
+[2026-02-12 07:23:42] SUCCESS: Customer Login [milesmorales@gmail.com] - Name: Valued Customer
+[2026-02-12 07:23:51] LOGOUT: User [milesmorales@gmail.com] has logged out.
+[2026-02-12 07:26:19] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-12 07:29:24] REGISTRATION SUCCESS: New customer account created for [m.clara@gmail.com]
+[2026-02-12 07:36:30] REGISTRATION SUCCESS: New customer account created for [xanderrevelar@gmail.com]
+[2026-02-12 07:39:32] REGISTRATION SUCCESS: New customer account created for [andreivilla69@gmail.com]
+[2026-02-12 07:39:41] SUCCESS: Customer Login [andreivilla69@gmail.com] - Name: andrei villa
+[2026-02-12 07:45:36] LOGOUT: User [andreivilla69@gmail.com] has logged out.

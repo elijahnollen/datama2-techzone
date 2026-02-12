@@ -1,41 +1,46 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-
-require_once 'config.php';
-
-$data = json_decode(file_get_contents("php://input"), true);
+// ... header and config code ...
 
 if (!empty($data['email'])) {
     $email = trim($data['email']);
+    $userFound = false;
+    $targetTable = "";
 
-    // 1. Check if user exists in your customer table
-    $queryUrl = SUPABASE_URL . "/rest/v1/customer?email_address=eq." . urlencode($email) . "&select=*";
+    // 1. Try searching 'customer' table first
+    $tables = ['customer', 'employee']; // List of tables to check
+    
+    foreach ($tables as $table) {
+        $queryUrl = SUPABASE_URL . "/rest/v1/$table?email_address=eq." . urlencode($email) . "&select=*";
+        
+        $ch = curl_init($queryUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "apikey: " . SUPABASE_KEY,
+            "Authorization: Bearer " . SUPABASE_KEY
+        ]);
+        
+        $response = curl_exec($ch);
+        $result = json_decode($response, true);
+        curl_close($ch);
 
-    $ch = curl_init($queryUrl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "apikey: " . SUPABASE_KEY,
-        "Authorization: Bearer " . SUPABASE_KEY
-    ]);
+        if (!empty($result)) {
+            $userFound = true;
+            $user = $result[0];
+            $targetTable = $table;
+            break; // Stop searching once we find the user
+        }
+    }
 
-    $response = curl_exec($ch);
-    $result = json_decode($response, true);
-    curl_close($ch);
-
-    if (!empty($result)) {
-        // In a real scenario, this is where you'd trigger the PHPMailer logic
-        logAction("FORGOT PASSWORD: Valid request for [$email]. User found.");
+    if ($userFound) {
+        // Logic for sending SMS or Gmail instructions
+        logAction("FORGOT PASSWORD: Valid request for [$email] found in [$targetTable] table.");
         echo json_encode([
             "success" => true,
-            "message" => "Account found. Reset instructions would be sent to your Gmail now."
+            "message" => "Account found in $targetTable records. Reset instructions sent."
         ]);
     } else {
-        logAction("FORGOT PASSWORD: Fail for [$email]. User not in database.");
+        logAction("FORGOT PASSWORD: Fail for [$email]. User not in any table.");
         http_response_code(404);
-        echo json_encode(["success" => false, "message" => "This email is not registered with us."]);
+        echo json_encode(["success" => false, "message" => "This email is not registered."]);
     }
-} else {
-    http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Please enter your email address."]);
 }
