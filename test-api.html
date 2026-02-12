@@ -2,88 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechZone API Tester</title>
+    <title>TechZone | Product Catalog</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f9; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
-        input, select, button { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-        input { flex-grow: 1; }
-        button { background: #06b6d4; color: white; border: none; cursor: pointer; font-weight: bold; }
-        button:hover { background: #0891b2; }
-        .product-card { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .product-card:last-child { border: none; }
-        .price { color: #059669; font-weight: bold; }
-        .debug-box { background: #272727; color: #34d399; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; overflow-x: auto; margin-top: 20px; }
+        :root { --primary: #06b6d4; --dark: #0f172a; --light: #f8fafc; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--light); margin: 0; padding: 20px; }
+        .catalog-container { max-width: 1200px; margin: 0 auto; }
+        
+        /* Search & Filter Bar */
+        .search-header { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        .filter-grid { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 15px; }
+        
+        input, select, button { padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; }
+        input:focus { border-color: var(--primary); ring: 2px var(--primary); }
+        button { background: var(--primary); color: white; border: none; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        button:hover { background: #0891b2; transform: translateY(-1px); }
+
+        /* Product Grid */
+        #productGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .product-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        
+        .product-info { padding: 20px; flex-grow: 1; }
+        .category-label { font-size: 10px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display: block; }
+        .product-name { font-size: 18px; font-weight: 600; color: var(--dark); margin: 0 0 10px 0; line-height: 1.4; }
+        .product-price { font-size: 22px; font-weight: 700; color: #059669; margin-bottom: 15px; }
+        
+        .stock-status { font-size: 12px; color: #64748b; display: flex; align-items: center; gap: 5px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; }
+
+        /* Technical Debug Footer */
+        .debug-section { margin-top: 50px; border-top: 2px dashed #cbd5e1; padding-top: 20px; }
+        .debug-box { background: #1e293b; color: #38bdf8; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 12px; overflow-x: auto; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>TechZone Product API Tester</h2>
-    
-    <div class="controls">
-        <input type="text" id="searchInput" placeholder="Search for a specific item (e.g. Keyboard)">
-        <select id="categorySelect">
-            <option value="">All Categories</option>
-            <option value="Peripherals">Peripherals</option>
-            <option value="Components">Components</option>
-            <option value="Laptops">Laptops</option>
-        </select>
-        <button onclick="testApi()">Fetch Products</button>
+<div class="catalog-container">
+    <div class="search-header">
+        <h1 style="margin: 0 0 20px 0; color: var(--dark);">TechZone PH</h1>
+        <div class="filter-grid">
+            <input type="text" id="searchInput" placeholder="What are you looking for today?">
+            
+            <select id="categorySelect">
+                <option value="All">All Categories</option>
+                <option value="Processor">Processors</option>
+                <option value="Graphics Card">Graphics Cards</option>
+                <option value="Motherboard">Motherboards</option>
+                <option value="Memory">Memory (RAM)</option>
+                <option value="Storage">Storage</option>
+                <option value="Display">Displays</option>
+                <option value="Peripherals">Peripherals</option>
+                <option value="Audio">Audio</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Accessories">Accessories</option>
+                <option value="General Electronics">General Electronics</option>
+            </select>
+
+            <select id="supplierSelect">
+                <option value="All">All Brands</option>
+                <option value="AMD Phil">AMD</option>
+                <option value="Asus Ph">ASUS</option>
+                <option value="Gigabyte Ph">Gigabyte</option>
+                <option value="Kingston D.">Kingston</option>
+                <option value="Logi Dist">Logitech</option>
+                <option value="Nvision">Nvision</option>
+            </select>
+            
+            <button onclick="searchCatalog()">Search Catalog</button>
+        </div>
     </div>
 
-    <div id="results">
-        <p>Results will appear here...</p>
-    </div>
+    <div id="productGrid">
+        </div>
 
-    <h4>Raw JSON Response (Forensic View):</h4>
-    <div id="debug" class="debug-box">Waiting for request...</div>
+    <div class="debug-section">
+        <h4 style="color: #64748b;">Forensic JSON Response:</h4>
+        <div id="debug" class="debug-box">Execute a search to see data stream...</div>
+    </div>
 </div>
 
 <script>
-    // REPLACE THIS WITH YOUR ACTUAL CODESPACE URL
     const API_URL = "https://symmetrical-spoon-4j577645qxwxc6gq-8000.app.github.dev/api/products.php";
 
-    async function testApi() {
+    async function searchCatalog() {
         const search = document.getElementById('searchInput').value;
         const category = document.getElementById('categorySelect').value;
-        const resultsDiv = document.getElementById('results');
-        const debugDiv = document.getElementById('debug');
+        const supplier = document.getElementById('supplierSelect').value;
+        const grid = document.getElementById('productGrid');
+        const debug = document.getElementById('debug');
 
-        // Construct URL with parameters
-        let url = `${API_URL}?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}`;
+        const url = `${API_URL}?search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}&supplier=${encodeURIComponent(supplier)}`;
         
         try {
-            debugDiv.innerText = `Requesting: ${url}...`;
             const response = await fetch(url);
             const data = await response.json();
+            debug.innerText = JSON.stringify(data, null, 2);
 
-            // Show raw JSON for debugging
-            debugDiv.innerText = JSON.stringify(data, null, 2);
-
-            // Render HTML cards
-            resultsDiv.innerHTML = "";
+            grid.innerHTML = "";
             if (data.length === 0) {
-                resultsDiv.innerHTML = "<p>No specific items found.</p>";
-            } else {
-                data.forEach(product => {
-                    resultsDiv.innerHTML += `
-                        <div class="product-card">
-                            <strong>${product.product_name}</strong><br>
-                            <span class="price">$${product.price}</span> | 
-                            <small>Category: ${product.category}</small>
-                        </div>
-                    `;
-                });
+                grid.innerHTML = "<div style='grid-column: 1/-1; text-align: center; padding: 40px;'><h3>No products found matching your search.</h3></div>";
+                return;
             }
-        } catch (error) {
-            debugDiv.innerText = "Error: " + error.message;
-            resultsDiv.innerHTML = "<p style='color:red;'>Failed to connect to backend. Check CORS and URL.</p>";
+
+            data.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-info">
+                            <span class="category-label">${p.category}</span>
+                            <h3 class="product-name">${p.product_name}</h3>
+                            <div class="product-price">₱${parseFloat(p.price).toLocaleString()}</div>
+                            <div class="stock-status">
+                                <div class="status-dot"></div>
+                                ${p.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'} — ${p.supplier_name}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        } catch (e) {
+            debug.innerText = "Error fetching catalog: " + e.message;
         }
     }
+    
+    // Initial load
+    searchCatalog();
 </script>
-
 </body>
 </html>

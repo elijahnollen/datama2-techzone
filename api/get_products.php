@@ -14,29 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 header("Content-Type: application/json");
 
 // --- GET PARAMETERS ---
-$search   = $_GET['search'] ?? '';
+$search = $_GET['search'] ?? '';
 $category = $_GET['category'] ?? '';
-$supplier = $_GET['supplier'] ?? '';
 
 // --- BASE URL ---
-// Using select=* ensures we fetch supplier details and wholesale costs for auditing
+// Default ordering by ID ensures a consistent list for forensic audits
 $url = SUPABASE_URL . "/rest/v1/product?select=*&order=id";
 
-// --- DYNAMIC FILTER LOGIC ---
+// --- FILTER LOGIC ---
 
-// 1. Search Filter (Fuzzy product name match)
+// 1. Search Filter (Case-insensitive fuzzy match)
 if (!empty($search)) {
     $url .= "&product_name=ilike.*" . urlencode($search) . "*";
 }
 
-// 2. Category Filter (Case-insensitive, skips if 'All')
+// 2. FIXED: Category Filter
+// We skip the filter if it is empty OR if the user selected "All"
 if (!empty($category) && strcasecmp($category, 'All') !== 0) {
     $url .= "&category=ilike." . urlencode($category);
-}
-
-// 3. Supplier Filter (New logic to filter by distributor)
-if (!empty($supplier) && strcasecmp($supplier, 'All') !== 0) {
-    $url .= "&supplier_name=ilike." . urlencode($supplier);
 }
 
 // --- API REQUEST ---
@@ -52,11 +47,16 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 // --- FORENSIC LOGGING ---
-error_log("[CATALOG ACCESS]: Cat: '$category', Search: '$search', Supplier: '$supplier' at " . date('Y-m-d H:i:s'));
+// Records intent and activity for audit logs
+error_log("[CATALOG ACCESS]: Category: '$category', Search: '$search' at " . date('Y-m-d H:i:s'));
 
+// Return the response from Supabase
 if ($httpCode === 200) {
     echo $response;
 } else {
     http_response_code($httpCode);
-    echo json_encode(["error" => "Fetch failed", "details" => json_decode($response)]);
+    echo json_encode([
+        "error" => "Failed to fetch data",
+        "details" => json_decode($response)
+    ]);
 }
