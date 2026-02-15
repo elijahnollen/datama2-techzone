@@ -84,3 +84,4 @@
 [2026-02-15 10:40:02] REGISTRATION SUCCESS: Account created for [mandacgian0515@gmail.com]
 [2026-02-15 10:45:50] IP: 127.0.0.1 | SUCCESS: Account verified for [josh.g@gmail.com] in [customer]
 [2026-02-15 10:48:30] IP: 127.0.0.1 | SUCCESS: Account verified for [adminGian@techzone.com] in [employee]
+[2026-02-15 11:27:56] IP: 127.0.0.1 | SUCCESS: Account verified for [adminGian@techzone.com] in [employee]
