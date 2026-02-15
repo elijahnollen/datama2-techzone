@@ -1,29 +1,40 @@
 <?php
-require_once 'config.php';
-
-header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
+// Absolute pathing to prevent crashes
+if (file_exists(__DIR__ . '/config.php')) {
+    require_once __DIR__ . '/config.php';
+} else {
+    http_response_code(500);
+    echo json_encode(["success" => false, "message" => "Config missing."]);
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
-$data = json_decode(file_get_contents('php://input'), true);
+// Input Processing
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
 
-if (!empty($data['email']) && !empty($data['password']) && !empty($data['table'])) {
-    // Normalizing email and table for the request
-    $email = trim($data['email']);
-    $table = strtolower(trim($data['table'])); // Ensure table name is lowercase
+$email = !empty($data['email']) ? trim($data['email']) : null;
+$password = !empty($data['password']) ? $data['password'] : null;
+$table = !empty($data['table']) ? strtolower(trim($data['table'])) : null;
+
+// Forensic Validation
+if ($email && $password && $table && $table !== 'undefined') {
     
-    // FORENSIC UPGRADE: Securely hash the password using BCRYPT
-    $newPass = password_hash($data['password'], PASSWORD_BCRYPT); 
+    // Hash for login compliance
+    $hashedPass = password_hash($password, PASSWORD_BCRYPT); 
 
-    // FIX: Using 'ilike' instead of 'eq' to handle case-sensitive emails
+    // ilike search to prevent case-sensitive mismatches
     $url = SUPABASE_URL . "/rest/v1/$table?email_address=ilike." . urlencode($email);
     
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['password' => $newPass]));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['password' => $hashedPass]));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "apikey: " . SUPABASE_KEY,
@@ -37,24 +48,12 @@ if (!empty($data['email']) && !empty($data['password']) && !empty($data['table']
     curl_close($ch);
 
     $result = json_decode($response, true);
-
-    // If result is empty, the PATCH didn't find a matching row
     if ($httpCode >= 200 && $httpCode < 300 && !empty($result)) {
-        logAction("SUCCESS: Password reset for [$email] in table [$table]");
-        echo json_encode(["success" => true, "message" => "Password updated successfully!"]);
+        echo json_encode(["success" => true, "message" => "Password updated!"]);
     } else {
-        logAction("FAILURE: Password reset failed for [$email] - HTTP: $httpCode");
-        echo json_encode([
-            "success" => false, 
-            "message" => "Update rejected. Email not found or database error.",
-            "forensic_debug" => [
-                "http_code" => $httpCode,
-                "tried_email" => $email,
-                "table" => $table,
-                "supabase_raw" => $result
-            ]
-        ]);
+        echo json_encode(["success" => false, "message" => "Database rejected update. Email not found in table '$table'."]);
     }
 } else {
-    echo json_encode(["success" => false, "message" => "Incomplete forensic data: email, table, or password required."]);
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Incomplete data. Restart from Step 1."]);
 }

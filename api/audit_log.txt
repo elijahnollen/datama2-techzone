@@ -28,3 +28,59 @@
 [2026-02-15 08:21:26] SUCCESS: Admin Login [adminAmiel@techzone.com]
 [2026-02-15 08:28:25] IP: 127.0.0.1 | FORGOT PASSWORD: Found [adminAmiel@techzone.com] in [employee]. Reset Link: http://localhost:8000/reset-password.html?email=adminAmiel%40techzone.com&table=employee
 [2026-02-15 08:30:16] IP: 127.0.0.1 | FORGOT PASSWORD: Found [josh.g@gmail.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=josh.g%40gmail.com&table=customer
+[2026-02-15 08:45:10] REGISTRATION SUCCESS: New customer account created for [whitwelldanny@gmail.com]
+[2026-02-15 08:45:37] IP: 127.0.0.1 | FORGOT PASSWORD: Found [whitwelldanny@gmail.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=whitwelldanny%40gmail.com&table=customer
+[2026-02-15 08:52:17] IP: 127.0.0.1 | FORGOT PASSWORD: Found [whitwelldanny@gmail.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=whitwelldanny%40gmail.com&table=customer
+[2026-02-15 09:12:08] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-15 09:12:40] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-15 09:20:29] IP: 127.0.0.1 | FORGOT PASSWORD: Found [liza.s@care.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=liza.s%40care.com&table=customer
+[2026-02-15 09:20:41] SUCCESS: Password reset for [liza.s@care.com] in table [customer]
+[2026-02-15 09:21:37] IP: 127.0.0.1 | FORGOT PASSWORD: Found [josh.g@gmail.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=josh.g%40gmail.com&table=customer
+[2026-02-15 09:21:47] SUCCESS: Password reset for [josh.g@gmail.com] in table [customer]
+[2026-02-15 09:41:51] FAILURE: Admin [adminDanny@techzone.com] - User Not Found
+[2026-02-15 09:42:06] IP: 127.0.0.1 | FORGOT PASSWORD FAIL: [adminDanny@techzone.com] not found.
+[2026-02-15 09:42:17] IP: 127.0.0.1 | FORGOT PASSWORD FAIL: [adminDanny@techzone.com] not found.
+[2026-02-15 09:44:10] IP: 127.0.0.1 | FAIL: Reset attempt for non-existent email [adminDanny@techzone.com]
+[2026-02-15 09:44:12] IP: 127.0.0.1 | FAIL: Reset attempt for non-existent email [adminDanny@techzone.com]
+[2026-02-15 09:44:30] FAILURE: Admin [adminGian@techzone.com] - Incorrect Password
+[2026-02-15 09:46:24] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 09:49:03] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 09:49:48] ERROR: Missing fields. Check JS variables.
+[2026-02-15 09:51:39] ERROR: Missing fields. Check JS variables.
+[2026-02-15 09:51:41] ERROR: Missing fields. Check JS variables.
+[2026-02-15 09:51:41] ERROR: Missing fields. Check JS variables.
+[2026-02-15 09:51:41] ERROR: Missing fields. Check JS variables.
+[2026-02-15 09:51:42] ERROR: Missing fields. Check JS variables.
+[2026-02-15 09:51:42] ERROR: Missing fields. Check JS variables.
+[2026-02-15 09:51:42] ERROR: Missing fields. Check JS variables.
+[2026-02-15 09:51:50] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 09:53:16] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 09:53:39] FAILURE: DB Reject [adminGian@techzone.com]. Code: 404
+[2026-02-15 09:54:40] FAILURE: DB Reject [adminGian@techzone.com]. Code: 404
+[2026-02-15 09:54:42] FAILURE: DB Reject [adminGian@techzone.com]. Code: 404
+[2026-02-15 09:57:10] FAILURE: DB Reject [adminGian@techzone.com] in [undefined]. Code: 404 Response: {"code":"PGRST205","details":null,"hint":null,"message":"Could not find the table 'public.undefined' in the schema cache"}
+[2026-02-15 09:57:16] FAILURE: DB Reject [adminGian@techzone.com] in [undefined]. Code: 404 Response: {"code":"PGRST205","details":null,"hint":null,"message":"Could not find the table 'public.undefined' in the schema cache"}
+[2026-02-15 10:01:42] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 10:02:24] FAILURE: DB Reject [adminGian@techzone.com] in [undefined]. Code: 404 Response: {"code":"PGRST205","details":null,"hint":null,"message":"Could not find the table 'public.undefined' in the schema cache"}
+[2026-02-15 10:03:07] FAILURE: DB Reject [adminGian@techzone.com] in [undefined]. Code: 404 Response: {"code":"PGRST205","details":null,"hint":null,"message":"Could not find the table 'public.undefined' in the schema cache"}
+[2026-02-15 10:06:25] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 10:09:02] FAILURE: DB Reject [adminGian@techzone.com] in [undefined]. Code: 404
+[2026-02-15 10:09:04] FAILURE: DB Reject [adminGian@techzone.com] in [undefined]. Code: 404
+[2026-02-15 10:09:07] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 10:09:15] FAILURE: DB Reject [adminGian@techzone.com] in [undefined]. Code: 404
+[2026-02-15 10:12:00] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 10:12:14] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [liza.s@care.com] (customer) -> http://localhost:8000/reset-password.html?email=liza.s%40care.com&table=customer
+[2026-02-15 10:12:24] FAILURE: DB Reject [liza.s@care.com] in [undefined]. Code: 404
+[2026-02-15 10:13:24] FAILURE: DB Reject [liza.s@care.com] in [undefined]. Code: 404
+[2026-02-15 10:13:25] FAILURE: DB Reject [liza.s@care.com] in [undefined]. Code: 404
+[2026-02-15 10:13:44] FAILURE: DB Reject [liza.s@care.com] in [undefined]. Code: 404
+[2026-02-15 10:15:58] FAILURE: DB Reject [liza.s@care.com] in [undefined]. Code: 404
+[2026-02-15 10:16:08] ERROR: Incomplete forensic data. Table received: undefined
+[2026-02-15 10:16:27] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [liza.s@care.com] (customer) -> http://localhost:8000/reset-password.html?email=liza.s%40care.com&table=customer
+[2026-02-15 10:16:41] ERROR: Incomplete forensic data. Table received: undefined
+[2026-02-15 10:18:15] IP: 127.0.0.1 | SUCCESS: Reset Link generated for [adminGian@techzone.com] (employee) -> http://localhost:8000/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 10:23:00] IP: 127.0.0.1 | SUCCESS: Account verified for [adminGian@techzone.com] in [employee]
+[2026-02-15 10:24:42] IP: 127.0.0.1 | SUCCESS: Account verified for [liza.s@care.com] in [customer]
+[2026-02-15 10:40:02] REGISTRATION SUCCESS: Account created for [mandacgian0515@gmail.com]
+[2026-02-15 10:45:50] IP: 127.0.0.1 | SUCCESS: Account verified for [josh.g@gmail.com] in [customer]
+[2026-02-15 10:48:30] IP: 127.0.0.1 | SUCCESS: Account verified for [adminGian@techzone.com] in [employee]

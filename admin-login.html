@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechZone Admin - Secure Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f3f4f6; min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Header */
+        .header { background: white; border-bottom: 1px solid #e5e7eb; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-size: 24px; font-weight: 700; }
+        .logo-zone { color: #00bcd4; } /* Admin Cyan */
+
+        /* Main Content */
+        .main-content { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 48px 24px; }
+        .login-container { max-width: 448px; margin: 0 auto; width: 100%; }
+        
+        /* Form Card */
+        .form-card { background: white; padding: 32px 40px; margin-top: 32px; border-radius: 12px; border: 1px solid #e5e7eb; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 6px; }
+        .form-input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: border-color 0.2s; }
+        .form-input:focus { outline: none; border-color: #00bcd4; box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1); }
+        
+        .form-options { display: flex; justify-content: flex-end; margin-bottom: 24px; }
+        .forgot-link { font-size: 13px; color: #00bcd4; text-decoration: none; font-weight: 500; }
+
+        .submit-btn { width: 100%; padding: 12px; background: #111827; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .submit-btn:hover { background: #1f2937; }
+
+        /* Portal Switcher */
+        .portal-switcher { margin-top: 30px; text-align: center; padding: 16px; background: #f0fdfa; border-radius: 8px; border: 1px dashed #99f6e4; }
+        .portal-switcher p { font-size: 13px; color: #0f766e; margin-bottom: 8px; }
+        .customer-link { font-size: 13px; color: #0d9488; text-decoration: none; font-weight: 700; }
+
+        #status-msg { margin-top: 15px; text-align: center; font-size: 14px; min-height: 20px; font-weight: 500; }
+        
+        .logout-btn { display: block; margin: 24px auto 0; background: none; border: none; color: #9ca3af; font-size: 12px; cursor: pointer; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo"><span class="logo-tech">TECH</span><span class="logo-zone">ZONE</span> <small style="font-size:10px; color:#666; font-weight:normal;">ADMIN</small></div>
+        <a href="index.html" style="text-decoration:none; color:#374151; font-size:14px;">Exit Portal</a>
+    </header>
+
+    <div class="main-content">
+        <div class="login-container">
+            <h2 style="text-align: center; font-size: 28px; color: #111827;">Admin Access</h2>
+            <p style="text-align: center; color: #6b7280; font-size: 14px; margin-top: 8px;">Authorized personnel only</p>
+            
+            <div class="form-card">
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label class="form-label">Internal Email</label>
+                        <input type="email" id="email" class="form-input" placeholder="name@techzone.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Security Password</label>
+                        <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+                    </div>
+                    <div class="form-options">
+                        <a href="forgot-password.html?type=admin" class="forgot-link">Trouble signing in?</a>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">Authenticate</button>
+                </form>
+
+                <div id="status-msg"></div>
+
+                <div class="portal-switcher">
+                    <p>Not an administrator?</p>
+                    <a href="customer-login.html" class="customer-link">Return to Customer Login</a>
+                </div>
+
+                <button onclick="handleLogout()" class="logout-btn">Wipe Session Cache</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const status = document.getElementById('status-msg');
+            const btn = document.getElementById('submitBtn');
+
+            btn.disabled = true;
+            status.innerText = "Securing connection...";
+            status.style.color = "#6b7280";
+
+            try {
+                // TARGET: The employee-specific API
+                const response = await fetch('./api/login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    status.innerText = "Identity verified. Granting access...";
+                    status.style.color = "#0d9488";
+                    localStorage.setItem('adminUser', data.name);
+                    // Redirect to the actual dashboard
+                    setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 1500);
+                } else {
+                    status.innerText = data.message;
+                    status.style.color = "#ef4444";
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                status.innerText = "API Handshake failed.";
+                status.style.color = "#ef4444";
+                btn.disabled = false;
+            }
+        });
+
+        function handleLogout() {
+            localStorage.clear();
+            alert("All local forensic data wiped.");
+            location.reload();
+        }
+    </script>
+</body>
+</html>

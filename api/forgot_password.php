@@ -1,7 +1,6 @@
 <?php
 ob_start(); 
-
-require_once 'config.php'; 
+require_once __DIR__ . '/config.php'; 
 
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
@@ -11,7 +10,6 @@ header("Access-Control-Allow-Headers: Content-Type");
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
 function writeToLog($message) {
-    // Forensic Path: Ensure log is written in the api folder
     $log_file = __DIR__ . '/audit_log.txt';
     $timestamp = date('Y-m-d H:i:s');
     $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
@@ -26,11 +24,9 @@ if (!empty($data['email'])) {
     $userFound = false;
     $targetTable = "";
 
-    // Search across customer and employee tables
     $tables = ['customer', 'employee']; 
     
     foreach ($tables as $table) {
-        // FORENSIC FIX: Changed 'eq' to 'ilike' for case-insensitivity
         $queryUrl = SUPABASE_URL . "/rest/v1/$table?email_address=ilike." . urlencode($email) . "&select=*";
         
         $ch = curl_init($queryUrl);
@@ -54,26 +50,22 @@ if (!empty($data['email'])) {
     ob_clean(); 
 
     if ($userFound) {
-        // DYNAMIC URL: Automatically detects if you're on Codespaces or Vercel
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-        $host = $_SERVER['HTTP_HOST'];
-        $resetLink = $protocol . $host . "/reset-password.html?email=" . urlencode($email) . "&table=" . $targetTable;
-
-        writeToLog("FORGOT PASSWORD: Found [$email] in [$targetTable]. Reset Link: $resetLink");
+        // SUCCESS: We now send the table name BACK to the browser
+        writeToLog("SUCCESS: Account verified for [$email] in [$targetTable]");
 
         echo json_encode([
             "success" => true,
-            "message" => "Account found. Your reset link is ready in the audit log.",
-            "table" => $targetTable // Frontend uses this to redirect automatically if needed
+            "table" => $targetTable, // CRITICAL: This was missing!
+            "message" => "Account verified. Proceed to Step 2."
         ]);
     } else {
-        writeToLog("FORGOT PASSWORD FAIL: [$email] not found.");
+        writeToLog("FAIL: Reset attempt for non-existent email [$email]");
         http_response_code(404);
-        echo json_encode(["success" => false, "message" => "This email is not registered."]);
+        echo json_encode(["success" => false, "message" => "Email not found."]);
     }
 } else {
     ob_clean();
     http_response_code(400);
-    echo json_encode(["success" => false, "message" => "Email address is required."]);
+    echo json_encode(["success" => false, "message" => "Email is required."]);
 }
 exit;
