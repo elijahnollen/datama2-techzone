@@ -126,3 +126,5 @@
 [2026-02-15 04:25:16] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
 [2026-02-15 04:25:53] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
 [2026-02-15 04:26:14] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
+[2026-02-15 04:28:34] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-15 04:28:55] FAILURE: Admin [vinzcruz12@gmail.com] - Not Found
