@@ -84,3 +84,38 @@
 [2026-02-12 07:39:32] REGISTRATION SUCCESS: New customer account created for [andreivilla69@gmail.com]
 [2026-02-12 07:39:41] SUCCESS: Customer Login [andreivilla69@gmail.com] - Name: andrei villa
 [2026-02-12 07:45:36] LOGOUT: User [andreivilla69@gmail.com] has logged out.
+[2026-02-14 06:52:49] REGISTRATION SUCCESS: New customer account created for [vinzcruz12@gmail.com]
+[2026-02-14 06:54:12] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-14 07:13:14] FAILURE: Customer [vinzcruz12@gmail.com] - Incorrect Password
+[2026-02-14 07:14:06] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-14 07:14:13] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-14 07:14:19] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-14 07:14:53] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-14 07:19:22] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-14 07:19:22] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-14 07:27:02] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-14 07:30:54] REGISTRATION SUCCESS: New customer account created for [earljot@gmail.com]
+[2026-02-14 07:33:37] REGISTRATION FAILURE: Could not create account for [m.clara@gmail.com]. Error code: 409
+[2026-02-14 07:37:54] REGISTRATION FAILURE: Could not create account for [vinzcruz12@gmail.com]. Error code: 409
+[2026-02-15 03:24:49] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-15 03:25:37] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
+[2026-02-15 03:28:58] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer].
+[2026-02-15 03:29:37] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer].
+[2026-02-15 03:30:03] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer].
+[2026-02-15 03:32:51] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer].
+[2026-02-15 03:33:20] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer].
+[2026-02-15 03:34:26] IP: 127.0.0.1 | MAIL ERROR: Could not send to [vinzcruz12@gmail.com]. Error: SMTP Error: Could not authenticate.
+[2026-02-15 03:34:51] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer].
+[2026-02-15 03:50:49] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 03:53:02] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 03:56:14] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 03:59:50] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 04:01:35] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 04:02:50] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 04:04:53] IP: 127.0.0.1 | PASS-UPDATE FAIL: Supabase HTTP 404 for [vinzcruz12@gmail.com].
+[2026-02-15 04:08:35] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 04:11:32] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 04:11:54] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 04:14:44] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 04:15:16] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 04:16:01] IP: 127.0.0.1 | FORGOT PASSWORD: Found [adminGian@techzone.com] in [employee]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=adminGian%40techzone.com&table=employee

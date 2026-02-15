@@ -3,7 +3,7 @@
         'name' => 'codespace/datama2-techzone',
         'pretty_version' => 'dev-develop',
         'version' => 'dev-develop',
-        'reference' => 'fcc4a6d6435113037cad415c57373fb9d9229c0b',
+        'reference' => 'c09286384b3c5558ed1af30bf31b1629c9ef188b',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'codespace/datama2-techzone' => array(
             'pretty_version' => 'dev-develop',
             'version' => 'dev-develop',
-            'reference' => 'fcc4a6d6435113037cad415c57373fb9d9229c0b',
+            'reference' => 'c09286384b3c5558ed1af30bf31b1629c9ef188b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

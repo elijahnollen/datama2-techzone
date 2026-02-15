@@ -1,13 +1,37 @@
 <?php
-// ... header and config code ...
+// Prevent accidental whitespace from breaking JSON
+ob_start(); 
+
+require_once 'config.php'; 
+
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
+
+/**
+ * Forensic Logging Function
+ */
+function writeToLog($message) {
+    $log_file = 'audit_log.txt';
+    $timestamp = date('Y-m-d H:i:s');
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    $entry = "[$timestamp] IP: $ip | $message" . PHP_EOL;
+    file_put_contents($log_file, $entry, FILE_APPEND);
+}
+
+// Capture JSON input from fetch
+$data = json_decode(file_get_contents('php://input'), true);
 
 if (!empty($data['email'])) {
     $email = trim($data['email']);
     $userFound = false;
     $targetTable = "";
 
-    // 1. Try searching 'customer' table first
-    $tables = ['customer', 'employee']; // List of tables to check
+    // Search across customer and employee tables
+    $tables = ['customer', 'employee']; 
     
     foreach ($tables as $table) {
         $queryUrl = SUPABASE_URL . "/rest/v1/$table?email_address=eq." . urlencode($email) . "&select=*";
@@ -25,22 +49,36 @@ if (!empty($data['email'])) {
 
         if (!empty($result)) {
             $userFound = true;
-            $user = $result[0];
             $targetTable = $table;
-            break; // Stop searching once we find the user
+            break; 
         }
     }
 
+    ob_clean(); // Wipe buffer before JSON output
+
     if ($userFound) {
-        // Logic for sending SMS or Gmail instructions
-        logAction("FORGOT PASSWORD: Valid request for [$email] found in [$targetTable] table.");
+        /**
+         * LOG-BASED RESET INTEGRATION
+         * We generate the link and save it to the log instead of sending an email.
+         */
+        // Replace with your actual Frontend URL for the reset page
+        $frontendUrl = "https://your-codespace-url-5173.app.github.dev/reset-password.html";
+        $resetLink = $frontendUrl . "?email=" . urlencode($email) . "&table=" . $targetTable;
+
+        writeToLog("FORGOT PASSWORD: Found [$email] in [$targetTable]. Reset Link: $resetLink");
+
         echo json_encode([
             "success" => true,
-            "message" => "Account found in $targetTable records. Reset instructions sent."
+            "message" => "Account found. For development, your reset link has been sent to audit_log.txt."
         ]);
     } else {
-        logAction("FORGOT PASSWORD: Fail for [$email]. User not in any table.");
+        writeToLog("FORGOT PASSWORD FAIL: [$email] not found.");
         http_response_code(404);
         echo json_encode(["success" => false, "message" => "This email is not registered."]);
     }
+} else {
+    ob_clean();
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Email address is required."]);
 }
+exit;
