@@ -8,9 +8,9 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 if (!empty($data['email']) && !empty($data['password'])) {
     $email = trim($data['email']);
-    $password = $data['password'];
+    $passwordFromInput = $data['password'];
 
-    // 1. Updated query to fetch specific columns since customer_name is gone
+    // 1. Fetch user data by email
     $queryUrl = SUPABASE_URL . "/rest/v1/customer?email_address=eq." . urlencode($email) . "&select=id,first_name,last_name,password,role";
 
     $ch = curl_init($queryUrl);
@@ -26,11 +26,12 @@ if (!empty($data['email']) && !empty($data['password'])) {
 
     if (!empty($result) && isset($result[0])) {
         $user = $result[0]; 
+        $hashedPasswordFromDB = $user['password']; // This is the $2y$10$... string
         
-        // 2. Plain text password comparison
-        if ($password === $user['password']) {
+        // 2. FORENSIC UPGRADE: Verify the plain text input against the stored hash
+        if (password_verify($passwordFromInput, $hashedPasswordFromDB)) {
             
-            // 3. Combine First and Last name for a clean forensic identity
+            // 3. Combine First and Last name for identity
             $firstName = $user['first_name'] ?? '';
             $lastName = $user['last_name'] ?? '';
             $fullName = trim($firstName . " " . $lastName);
@@ -48,7 +49,8 @@ if (!empty($data['email']) && !empty($data['password'])) {
                 "user_id" => $user['id']
             ]);
         } else {
-            logAction("FAILURE: Customer [$email] - Incorrect Password");
+            // This triggers if password_verify() returns false
+            logAction("FAILURE: Customer [$email] - Incorrect Password Hash Match");
             http_response_code(401);
             echo json_encode(["success" => false, "message" => "Invalid password."]);
         }
