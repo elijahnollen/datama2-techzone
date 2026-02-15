@@ -10,13 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Verify we have all 3 pieces of forensic evidence
 if (!empty($data['email']) && !empty($data['password']) && !empty($data['table'])) {
+    // Normalizing email and table for the request
     $email = trim($data['email']);
-    $table = trim($data['table']);
+    $table = strtolower(trim($data['table'])); // Ensure table name is lowercase
+    
+    // FORENSIC UPGRADE: Securely hash the password using BCRYPT
     $newPass = password_hash($data['password'], PASSWORD_BCRYPT); 
 
-    $url = SUPABASE_URL . "/rest/v1/$table?email_address=eq." . urlencode($email);
+    // FIX: Using 'ilike' instead of 'eq' to handle case-sensitive emails
+    $url = SUPABASE_URL . "/rest/v1/$table?email_address=ilike." . urlencode($email);
     
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
@@ -26,26 +29,32 @@ if (!empty($data['email']) && !empty($data['password']) && !empty($data['table']
         "apikey: " . SUPABASE_KEY,
         "Authorization: Bearer " . SUPABASE_KEY,
         "Content-Type: application/json",
-        "Prefer: return=representation" // This is key to seeing if it actually worked
+        "Prefer: return=representation" 
     ]);
 
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    // If Supabase returns an empty array [], it means no user matched that email
     $result = json_decode($response, true);
 
+    // If result is empty, the PATCH didn't find a matching row
     if ($httpCode >= 200 && $httpCode < 300 && !empty($result)) {
+        logAction("SUCCESS: Password reset for [$email] in table [$table]");
         echo json_encode(["success" => true, "message" => "Password updated successfully!"]);
     } else {
+        logAction("FAILURE: Password reset failed for [$email] - HTTP: $httpCode");
         echo json_encode([
             "success" => false, 
-            "message" => "Database rejected update. Ensure the email exists in the $table table.",
-            "debug_code" => $httpCode,
-            "supabase_msg" => $response
+            "message" => "Update rejected. Email not found or database error.",
+            "forensic_debug" => [
+                "http_code" => $httpCode,
+                "tried_email" => $email,
+                "table" => $table,
+                "supabase_raw" => $result
+            ]
         ]);
     }
 } else {
-    echo json_encode(["success" => false, "message" => "Missing data: email, table, or password."]);
+    echo json_encode(["success" => false, "message" => "Incomplete forensic data: email, table, or password required."]);
 }

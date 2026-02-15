@@ -1,5 +1,4 @@
 <?php
-// Prevent accidental whitespace from breaking JSON
 ob_start(); 
 
 require_once 'config.php'; 
@@ -11,18 +10,15 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') exit;
 
-/**
- * Forensic Logging Function
- */
 function writeToLog($message) {
-    $log_file = 'audit_log.txt';
+    // Forensic Path: Ensure log is written in the api folder
+    $log_file = __DIR__ . '/audit_log.txt';
     $timestamp = date('Y-m-d H:i:s');
     $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     $entry = "[$timestamp] IP: $ip | $message" . PHP_EOL;
     file_put_contents($log_file, $entry, FILE_APPEND);
 }
 
-// Capture JSON input from fetch
 $data = json_decode(file_get_contents('php://input'), true);
 
 if (!empty($data['email'])) {
@@ -34,7 +30,8 @@ if (!empty($data['email'])) {
     $tables = ['customer', 'employee']; 
     
     foreach ($tables as $table) {
-        $queryUrl = SUPABASE_URL . "/rest/v1/$table?email_address=eq." . urlencode($email) . "&select=*";
+        // FORENSIC FIX: Changed 'eq' to 'ilike' for case-insensitivity
+        $queryUrl = SUPABASE_URL . "/rest/v1/$table?email_address=ilike." . urlencode($email) . "&select=*";
         
         $ch = curl_init($queryUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -54,22 +51,20 @@ if (!empty($data['email'])) {
         }
     }
 
-    ob_clean(); // Wipe buffer before JSON output
+    ob_clean(); 
 
     if ($userFound) {
-        /**
-         * LOG-BASED RESET INTEGRATION
-         * We generate the link and save it to the log instead of sending an email.
-         */
-        // Replace with your actual Frontend URL for the reset page
-        $frontendUrl = "https://your-codespace-url-5173.app.github.dev/reset-password.html";
-        $resetLink = $frontendUrl . "?email=" . urlencode($email) . "&table=" . $targetTable;
+        // DYNAMIC URL: Automatically detects if you're on Codespaces or Vercel
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+        $host = $_SERVER['HTTP_HOST'];
+        $resetLink = $protocol . $host . "/reset-password.html?email=" . urlencode($email) . "&table=" . $targetTable;
 
         writeToLog("FORGOT PASSWORD: Found [$email] in [$targetTable]. Reset Link: $resetLink");
 
         echo json_encode([
             "success" => true,
-            "message" => "Account found. For development, your reset link has been sent to audit_log.txt."
+            "message" => "Account found. Your reset link is ready in the audit log.",
+            "table" => $targetTable // Frontend uses this to redirect automatically if needed
         ]);
     } else {
         writeToLog("FORGOT PASSWORD FAIL: [$email] not found.");

@@ -14,27 +14,30 @@ $data = json_decode($json);
 
 if ($data && !empty($data->email) && !empty($data->password)) {
     $email = trim($data->email);
-    $password = $data->password; 
+    
+    // FORENSIC SECURITY: Hash the password before sending to Supabase
+    // This allows password_verify() to work during login
+    $hashedPassword = password_hash($data->password, PASSWORD_BCRYPT); 
+    
     $role = $data->role ?? 'customer';
     
     // Determine which table to use
     $tableName = ($role === 'employee' || $role === 'admin') ? 'employee' : 'customer';
 
     // 1. Shared columns for BOTH tables
-    // We now rely on first_name and last_name instead of a single name column
     $payload = [
         "email_address" => $email,
-        "password"      => $password,
+        "password"      => $hashedPassword, // Using the secure hash
         "first_name"    => $data->first_name ?? null,
         "last_name"     => $data->last_name ?? null
     ];
 
     // 2. Table-specific logic
     if ($tableName === 'customer') {
-        // REMOVED: customer_name is no longer in the payload
-        $payload["phone_number"]  = $data->phone_number ?? null;
-        $payload["address"]       = $data->address ?? null;
-        $payload["role"]          = 'customer'; // Explicitly set role for forensic tracking
+        // Now capturing the Address and Phone Number from your modern UI
+        $payload["phone_number"] = $data->phone_number ?? null;
+        $payload["address"]      = $data->address ?? null;
+        $payload["role"]         = 'customer'; 
     } else {
         // Employee/Admin specific columns
         $payload["employee_role"] = $role;
@@ -65,9 +68,9 @@ if ($data && !empty($data->email) && !empty($data->password)) {
             "message" => "Registration successful as $role."
         ]);
     } else {
-        logAction("REGISTRATION FAILURE: Could not create account for [$email]. Error code: $httpCode");
+        logAction("REGISTRATION FAILURE: Could not create account for [$email]. Code: $httpCode");
         http_response_code($httpCode);
-        echo $response; // Return Supabase error for debugging
+        echo $response; 
     }
 } else {
     http_response_code(400);

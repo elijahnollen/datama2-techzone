@@ -1,0 +1,30 @@
+[2026-02-15 07:46:15] FAILURE: Customer [vinzcruz12@gmail.com] - User Not Found
+[2026-02-15 07:47:29] FAILURE: Customer [chavez.amiel.diamond@gmail.com] - User Not Found
+[2026-02-15 07:48:26] FAILURE: Customer [vinzcruz12@gmail.com] - User Not Found
+[2026-02-15 07:48:36] REGISTRATION FAILURE: Could not create account for [chavez.amiel.diamond@gmail.com]. Code: 0
+[2026-02-15 07:52:23] FAILURE: User Not Found [vinzcruz12@gmail.com]
+[2026-02-15 07:56:44] FAILURE: User Not Found [vinzcruz12@gmail.com]
+[2026-02-15 07:59:40] FAILURE: Admin [adminGian@techzone.com] - Wrong Pass
+[2026-02-15 08:01:45] FAILURE: Admin [admingian@techzone.com] - Not Found in Employee Table
+[2026-02-15 08:02:36] FAILURE: Admin [admingian@techzone.com] - Not Found
+[2026-02-15 08:05:29] FAILURE: Admin [adminGian@techzone.com] - Incorrect Password
+[2026-02-15 08:05:50] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-15 08:06:02] IP: 127.0.0.1 | FORGOT PASSWORD: Found [adminGian@techzone.com] in [employee]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 08:09:57] SUCCESS: Password reset for [adminGian@techzone.com] in table [employee]
+[2026-02-15 08:10:53] IP: 127.0.0.1 | FORGOT PASSWORD: Found [liza.s@care.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=liza.s%40care.com&table=customer
+[2026-02-15 08:11:09] IP: 127.0.0.1 | FORGOT PASSWORD: Found [liza.s@care.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=liza.s%40care.com&table=customer
+[2026-02-15 08:11:53] IP: 127.0.0.1 | FORGOT PASSWORD: Found [josh.g@gmail.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=josh.g%40gmail.com&table=customer
+[2026-02-15 08:12:11] SUCCESS: Password reset for [josh.g@gmail.com] in table [customer]
+[2026-02-15 08:12:50] SUCCESS: Admin Login [adminAmiel@techzone.com]
+[2026-02-15 08:14:34] REGISTRATION SUCCESS: New customer account created for [davebautista@gmail.com]
+[2026-02-15 08:14:34] REGISTRATION SUCCESS: New customer account created for [chavez.amiel.diamond@gmail.com]
+[2026-02-15 08:14:35] REGISTRATION FAILURE: Could not create account for [chavez.amiel.diamond@gmail.com]. Code: 409
+[2026-02-15 08:16:04] FAILURE: Admin [chavez.amiel.diamond@gmail.com] - User Not Found
+[2026-02-15 08:16:49] FAILURE: Admin [chavez.amiel.diamond@gmail.com] - User Not Found
+[2026-02-15 08:19:29] FAILURE: Admin [adminAmiel@techzone.com] - Incorrect Password
+[2026-02-15 08:20:19] FAILURE: Admin [adminAmiel@techzone.com] - Incorrect Password
+[2026-02-15 08:20:39] FAILURE: Admin [adminAmiel@techzone.com] - Incorrect Password
+[2026-02-15 08:20:44] IP: 127.0.0.1 | FORGOT PASSWORD: Found [adminAmiel@techzone.com] in [employee]. Reset Link: http://localhost:8000/reset-password.html?email=adminAmiel%40techzone.com&table=employee
+[2026-02-15 08:21:26] SUCCESS: Admin Login [adminAmiel@techzone.com]
+[2026-02-15 08:28:25] IP: 127.0.0.1 | FORGOT PASSWORD: Found [adminAmiel@techzone.com] in [employee]. Reset Link: http://localhost:8000/reset-password.html?email=adminAmiel%40techzone.com&table=employee
+[2026-02-15 08:30:16] IP: 127.0.0.1 | FORGOT PASSWORD: Found [josh.g@gmail.com] in [customer]. Reset Link: http://localhost:8000/reset-password.html?email=josh.g%40gmail.com&table=customer

@@ -128,3 +128,32 @@
 [2026-02-15 04:26:14] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
 [2026-02-15 04:28:34] SUCCESS: Admin Login [adminGian@techzone.com]
 [2026-02-15 04:28:55] FAILURE: Admin [vinzcruz12@gmail.com] - Not Found
+[2026-02-15 04:30:01] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
+[2026-02-15 06:20:20] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
+[2026-02-15 06:20:26] FAILURE: Customer [vinzcruz12@gmail.com] - Incorrect Password Hash Match
+[2026-02-15 06:20:28] LOGOUT: User [vinzcruz12@gmail.com] has logged out.
+[2026-02-15 06:23:20] FAILURE: Customer [adminGian@techzone.com] - User Not Found
+[2026-02-15 06:23:37] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
+[2026-02-15 06:23:42] IP: 127.0.0.1 | FORGOT PASSWORD: Found [vinzcruz12@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=vinzcruz12%40gmail.com&table=customer
+[2026-02-15 06:30:39] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
+[2026-02-15 06:32:35] REGISTRATION SUCCESS: New customer account created for [lancecaranga01@gmail.com]
+[2026-02-15 06:40:34] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-15 06:44:47] IP: 127.0.0.1 | FORGOT PASSWORD: Found [lancecaranga01@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=lancecaranga01%40gmail.com&table=customer
+[2026-02-15 06:48:41] IP: 127.0.0.1 | FORGOT PASSWORD: Found [lancecaranga01@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=lancecaranga01%40gmail.com&table=customer
+[2026-02-15 06:51:19] IP: 127.0.0.1 | FORGOT PASSWORD: Found [lancecaranga01@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=lancecaranga01%40gmail.com&table=customer
+[2026-02-15 06:54:59] IP: 127.0.0.1 | FORGOT PASSWORD: Found [lancecaranga01@gmail.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=lancecaranga01%40gmail.com&table=customer
+[2026-02-15 07:04:36] REGISTRATION SUCCESS: New admin account created for [mandacgian05@gmail.com]
+[2026-02-15 07:09:26] FAILURE: Customer [liza.s@care.com] - Incorrect Password Hash Match
+[2026-02-15 07:10:10] FAILURE: Customer [liza.s@care.com] - Incorrect Password Hash Match
+[2026-02-15 07:10:15] FAILURE: Customer [liza.s@care.com] - Incorrect Password Hash Match
+[2026-02-15 07:10:55] FAILURE: Customer [liza.s@care.com] - Incorrect Password Hash Match
+[2026-02-15 07:11:46] SUCCESS: Customer Login [vinzcruz12@gmail.com] - Name: vinz cruz
+[2026-02-15 07:12:52] FAILURE: Customer [liza.s@care.com] - Incorrect Password Hash Match
+[2026-02-15 07:13:38] FAILURE: Customer [liza.s@care.com] - Incorrect Password Hash Match
+[2026-02-15 07:17:35] IP: 127.0.0.1 | FORGOT PASSWORD: Found [liza.s@care.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=liza.s%40care.com&table=customer
+[2026-02-15 07:18:00] SUCCESS: Customer Login [liza.s@care.com] - Name: Liza Soberano
+[2026-02-15 07:18:23] FAILURE: Admin [liza.s@care.com] - Not Found
+[2026-02-15 07:18:46] SUCCESS: Admin Login [adminGian@techzone.com]
+[2026-02-15 07:18:55] IP: 127.0.0.1 | FORGOT PASSWORD: Found [adminGian@techzone.com] in [employee]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=adminGian%40techzone.com&table=employee
+[2026-02-15 07:31:29] SUCCESS: Customer Login [liza.s@care.com] - Name: Liza Soberano
+[2026-02-15 07:31:33] IP: 127.0.0.1 | FORGOT PASSWORD: Found [liza.s@care.com] in [customer]. Reset Link: https://your-codespace-url-5173.app.github.dev/reset-password.html?email=liza.s%40care.com&table=customer
