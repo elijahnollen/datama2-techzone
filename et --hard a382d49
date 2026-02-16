@@ -1,0 +1,23 @@
+[33mbad4db9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/auth[m[33m, [m[1;31morigin/feature/auth[m[33m)[m none
+[33ma382d49[m many changes
+[33mbc090b9[m major changes
+[33mb7e8543[m none
+[33mc910fd1[m customer login changes
+[33m32d6208[m changes on forgot_password
+[33mc092863[m minor changes
+[33m928d27f[m login testing done
+[33mfcc4a6d[m added new features
+[33mf87f051[m added log out feature
+[33mdb33401[m some changes
+[33m7f04160[m login revised
+[33ma098b7a[m Merge branch 'feature/auth' of https://github.com/elijahnollen/datama2-techzone into feature/auth
+[33m8132d41[m login changes
+[33m9b5fc6c[m Update login.php
+[33maea5b51[m added shortcut startup for the server
+[33mc2e7b84[m converted into php backend and only for login of admin and customers only
+[33mf8f1e11[m chore: remove .env from tracking and update gitignore
+[33meb3881c[m updated login sytem and refund system with product search
+[33m5a6fd44[m login system progress
+[33mdabcaae[m changed the name of files
+[33m52daf87[m[33m ([m[1;31morigin/feature/supplier-management[m[33m, [m[1;31morigin/feature/sales-dashboard-optional[m[33m, [m[1;31morigin/feature/reviews[m[33m, [m[1;31morigin/feature/buil-a-pc-optional[m[33m)[m Added folders
+[33m00e4392[m[33m ([m[1;31morigin/main[m[33m)[m Initial commit
