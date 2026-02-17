@@ -1,8 +1,0 @@
-stdClass Object
-(
-    [first_name] => Gian
-    [last_name] => Mandac
-    [email] => gian_dev@techzone.ph
-    [password] => 123
-    [role] => employee
-)
