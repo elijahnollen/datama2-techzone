@@ -190,7 +190,7 @@ export function Home() {
                 {categories.map((cat) => (
                   <li key={cat.name}>
                     <button
-                      onClick={() => setSelectedCategory(cat.name)}
+                      onClick={() => { setSelectedCategory(cat.name); if (cat.name === 'All') { setSearchQuery(''); setSelectedPriceRange(null); } }}
                       className={`w-full flex items-center justify-between text-[13px] font-bold transition-colors ${
                         selectedCategory === cat.name
                           ? 'text-black'
