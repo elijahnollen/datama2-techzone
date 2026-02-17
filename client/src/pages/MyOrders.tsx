@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { ArrowLeft, Package } from 'lucide-react';
-import NavbarLoggedInState from '../imports/NavbarLoggedInState';
+import { Header } from '../components/Header';
 import Footer from '../imports/Footer-4-7106';
 import { getAllProducts } from '../services/database';
 import { Product } from '../types';
