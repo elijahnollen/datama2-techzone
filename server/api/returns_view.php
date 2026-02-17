@@ -14,11 +14,13 @@ if ($returnID <= 0) {
     exit;
 }
 
-// Header must belong to this customer
 $stmtHdr = $pdo->prepare("
-    SELECT returnID, return_date, refund_amount
-    FROM return_transaction
-    WHERE returnID = ? AND customerID = ?
+    SELECT
+        rt.returnID, rt.public_id, rt.date_created, rt.refund_amount,
+        rt.return_progress, rt.tracking_no, rt.return_method, rt.saleID
+    FROM return_transaction rt
+    JOIN sale s ON s.saleID = rt.saleID
+    WHERE rt.returnID = ? AND s.customerID = ?
     LIMIT 1
 ");
 $stmtHdr->execute([$returnID, $customerID]);
@@ -30,7 +32,6 @@ if (!$hdr) {
     exit;
 }
 
-// Items
 $stmtItems = $pdo->prepare("
     SELECT
         ri.return_itemID,
