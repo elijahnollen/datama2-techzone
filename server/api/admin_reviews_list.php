@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../auth/guards.php';
+require_admin();
+<?php
 require __DIR__ . '/../config/database.php';
 
 header('Content-Type: application/json');
