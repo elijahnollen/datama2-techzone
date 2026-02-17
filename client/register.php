@@ -10,7 +10,7 @@ $captcha = captcha_generate();
 <body>
   <h2>Customer Register</h2>
 
-  <form method="POST" action="/server/auth/customer_register.php">
+  <form method="POST" action="../server/auth/customer_register.php">
     <input name="first_name" placeholder="First name" required><br>
     <input name="last_name" placeholder="Last name" required><br>
     <input name="email" placeholder="Email (optional)"><br>
