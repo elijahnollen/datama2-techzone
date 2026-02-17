@@ -5,6 +5,7 @@ import { getAllProducts } from '../services/database';
 import { Product } from '../types';
 import Footer from '../imports/Footer-4-4788';
 import { DatabaseStatusBanner } from '../components/DatabaseStatusBanner';
+import { Header } from '../components/Header';
 
 const priceRanges = [
   { label: 'Sub ₱200', min: 0, max: 200 },
@@ -132,8 +133,9 @@ export function Home() {
     );
   }
 
-  return (
+return (
     <div className="min-h-screen bg-white">
+      <Header />
       {/* Database Status Banner */}
       <DatabaseStatusBanner />
       
