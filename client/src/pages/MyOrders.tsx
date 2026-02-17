@@ -173,7 +173,7 @@ export function MyOrders() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Navbar */}
-      <NavbarLoggedInState />
+      <Header />
 
       {/* Main Content */}
       <div className="flex-1 max-w-[1400px] mx-auto px-6 py-12 w-full">
