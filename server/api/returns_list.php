@@ -8,7 +8,7 @@ $pdo = db();
 $customerID = PROTOTYPE_CUSTOMER_ID;
 
 $stmt = $pdo->prepare("
-    SELECT returnID, return_date, refund_amount
+    SELECT returnID, date_created AS return_date, refund_amount
     FROM return_transaction
     WHERE customerID = ?
     ORDER BY returnID DESC
