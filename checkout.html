@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechZone | Secure Checkout</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .checkout-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        .header { text-align: center; margin-bottom: 1.5rem; }
+        .header h2 { color: #2563eb; margin: 0; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #374151; }
+        input, select { width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; box-sizing: border-box; }
+        .btn-pay { width: 100%; padding: 0.85rem; background-color: #2563eb; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 1rem; }
+        .btn-pay:hover { background-color: #1d4ed8; }
+        .btn-pay:disabled { background-color: #94a3b8; cursor: not-allowed; }
+        #status { margin-top: 1rem; text-align: center; font-size: 0.9rem; font-weight: 600; }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+    </style>
+</head>
+<body>
+
+<div class="checkout-card">
+    <div class="header">
+        <h2>TechZone Checkout</h2>
+        <p>Simulated Secure Payment Gateway</p>
+    </div>
+
+    <form id="paymentForm">
+        <div class="form-group">
+            <label>Customer ID</label>
+            <input type="number" id="customerID" value="1" required>
+        </div>
+
+        <div class="form-group">
+            <label>Payment Method</label>
+            <select id="method">
+                <option value="Credit Card">Credit Card</option>
+                <option value="GCash">GCash</option>
+                <option value="Maya">Maya</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Total Amount (PHP)</label>
+            <input type="number" id="amount" value="1500.00" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+            <label>Card Number (Simulation)</label>
+            <input type="text" id="cardNumber" placeholder="Use 4242 for success" required>
+        </div>
+
+        <button type="submit" class="btn-pay" id="payBtn">Confirm Payment</button>
+    </form>
+
+    <div id="status"></div>
+</div>
+
+<script>
+    const paymentForm = document.getElementById('paymentForm');
+    const statusDiv = document.getElementById('status');
+    const payBtn = document.getElementById('payBtn');
+
+    paymentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // UI State: Processing
+        payBtn.disabled = true;
+        payBtn.innerText = "Processing Transaction...";
+        statusDiv.innerText = "";
+        statusDiv.className = "";
+
+        const payload = {
+            customerID: parseInt(document.getElementById('customerID').value),
+            employeeID: 1, // Default System Logs
+            amount: parseFloat(document.getElementById('amount').value),
+            method: document.getElementById('method').value,
+            cardNumber: document.getElementById('cardNumber').value
+        };
+
+        try {
+            // Tatawag sa PHP API na ginawa natin sa XAMPP
+            const response = await fetch('./techzone/api/process-payment.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                statusDiv.className = "success";
+                statusDiv.innerText = `✅ ${result.message}\nTXN ID: ${result.transaction_id}`;
+                paymentForm.reset();
+            } else {
+                statusDiv.className = "error";
+                statusDiv.innerText = `❌ ${result.message}`;
+            }
+        } catch (err) {
+            statusDiv.className = "error";
+            statusDiv.innerText = "❌ Connection Error: Ensure XAMPP/Apache is running.";
+        } finally {
+            payBtn.disabled = false;
+            payBtn.innerText = "Confirm Payment";
+        }
+    });
+</script>
+
+</body>
+</html>
