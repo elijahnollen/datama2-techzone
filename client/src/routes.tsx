@@ -35,6 +35,7 @@ export const router = createBrowserRouter([
       { path: 'wallet', Component: Wallet },
       { path: 'messages', Component: Messages },
       { path: 'profile', Component: Profile },
+      { path: 'favorites', Component: Home },
     ],
   },
 ]);
