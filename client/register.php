@@ -1,6 +1,9 @@
 <?php
+require_once __DIR__ . '/../server/config/app.php';
 require_once __DIR__ . '/../server/lib/session.php';
 require_once __DIR__ . '/../server/auth/captcha.php';
+$captcha = captcha_generate();
+?>
 
 $captcha = captcha_generate();
 ?>
@@ -10,7 +13,7 @@ $captcha = captcha_generate();
 <body>
   <h2>Customer Register</h2>
 
-  <form method="POST" action="../server/auth/customer_register.php">
+  <form method="POST" action="<?= BASE_URL ?>/server/auth/customer_register.php">
     <input name="first_name" placeholder="First name" required><br>
     <input name="last_name" placeholder="Last name" required><br>
     <input name="email" placeholder="Email (optional)"><br>

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/app.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../lib/session.php';
 require_once __DIR__ . '/../auth/captcha.php';
@@ -96,7 +97,7 @@ while (!$inserted && $attempts < $maxRetries) {
 
     echo "<h2>Registration Successful!</h2>";
     echo "Welcome to TechZone. Your Customer ID is: <strong>" . htmlspecialchars($publicId) . "</strong>";
-    echo "<p><a href='/client/login.php'>Go to Login</a></p>";
+    echo "<p><a href='" . BASE_URL . "/client/login.php'>Go to Login</a></p>";
 
   } catch (PDOException $e) {
     // Duplicate entry collision
