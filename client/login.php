@@ -9,7 +9,7 @@
     <input name="email" placeholder="Email" required><br>
     <input name="password" type="password" placeholder="Password" required><br><br>
     <button type="submit">Login</button>
-    <p><a href="/client/forgot_password.php">Forgot password?</a></p>
+    <p><a href="forgot_password.php">Forgot password?</a>
   </form>
 
   <p><a href="/client/register.php">Register</a></p>

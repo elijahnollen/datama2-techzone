@@ -4,7 +4,7 @@
 <body>
   <h2>Forgot Password</h2>
 
-  <form method="POST" action="/server/auth/forgot_password_request.php">
+  <form method="POST" action="../server/auth/forgot_password_request.php">
     <input name="email" placeholder="Enter your email" required><br><br>
     <button type="submit">Send Reset Link</button>
   </form>
