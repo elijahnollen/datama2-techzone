@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/paths.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   http_response_code(405);
@@ -41,10 +42,13 @@ $ins = $pdo->prepare("
 ");
 $ins->execute([$customerID, $tokenHash, $expires]);
 
-// For prototype: show link on screen.
-// In real app: send via email.
-$resetLink = "/client/reset_password.php?token=" . urlencode($rawToken);
+$basePath = rtrim(dirname($_SERVER['SCRIPT_NAME'], 2), '/'); 
+// Example: /auth/server/auth -> /auth
+
+$resetLink = url("/client/reset_password.php?token=" . urlencode($rawToken));
 
 echo "<p><strong>Prototype reset link:</strong></p>";
 echo "<p><a href='{$resetLink}'>" . htmlspecialchars($resetLink) . "</a></p>";
-echo "<p><a href='/client/login.php'>Back to login</a></p>";
+
+echo "<p><a href='" . url("/client/login.php") . "'>Back to login</a></p>";
+
