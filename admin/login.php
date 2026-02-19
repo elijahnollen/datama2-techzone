@@ -1,4 +1,10 @@
-<?php require_once __DIR__ . '/../server/config/app.php'; ?>
+<?php 
+require_once __DIR__ . '/../server/config/app.php'; ?>
+<?php
+require_once __DIR__ . '/../server/auth/guards.php';
+require_admin();
+?>
+
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Admin Login</title></head>

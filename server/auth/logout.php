@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../config/app.php';
 require_once __DIR__ . '/../lib/session.php';
 
-session_unset();
+header('Content-Type: application/json');
+
+$_SESSION = [];
 session_destroy();
 
-header('Location: ' . BASE_URL . '/client/login.php');
-exit;
+echo json_encode(['success'=>true,'message'=>'Logged out']);
