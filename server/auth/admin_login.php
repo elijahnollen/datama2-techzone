@@ -1,36 +1,52 @@
 <?php
+require_once __DIR__ . '/../config/app.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../lib/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  http_response_code(405);
-  exit('Method not allowed');
+    header('Location: ' . BASE_URL . '/admin/login.php');
+    exit;
 }
 
 $username = trim($_POST['username'] ?? '');
-$pass     = (string)($_POST['password'] ?? '');
+$password = (string)($_POST['password'] ?? '');
+
+if ($username === '' || $password === '') {
+    echo "<p style='color:red;'>Username and password are required.</p>";
+    echo "<p><a href='" . BASE_URL . "/admin/login.php'>Back</a></p>";
+    exit;
+}
 
 $pdo = db();
 
 $stmt = $pdo->prepare("
-  SELECT adminID, password_hash, is_active
+  SELECT adminID, public_id, username, password_hash, is_active
   FROM admin_user
   WHERE username = ?
   LIMIT 1
 ");
 $stmt->execute([$username]);
-$admin = $stmt->fetch();
+$row = $stmt->fetch();
 
-if (!$admin || (int)$admin['is_active'] !== 1) {
-  exit("<p style='color:red;'>Invalid credentials.</p>");
+if (!$row || (int)$row['is_active'] !== 1) {
+    echo "<p style='color:red;'>Invalid login.</p>";
+    echo "<p><a href='" . BASE_URL . "/admin/login.php'>Back</a></p>";
+    exit;
 }
 
-if (!password_verify($pass, $admin['password_hash'])) {
-  exit("<p style='color:red;'>Invalid credentials.</p>");
+if (!password_verify($password, $row['password_hash'])) {
+    echo "<p style='color:red;'>Invalid login.</p>";
+    echo "<p><a href='" . BASE_URL . "/admin/login.php'>Back</a></p>";
+    exit;
 }
 
-session_regenerate_id(true); // recommended :contentReference[oaicite:6]{index=6}
-$_SESSION['admin_id'] = (int)$admin['adminID'];
+session_regenerate_id(true);
 
-echo "<h2>Admin login successful</h2>";
-echo "<p><a href='/admin/'>Go to Admin Dashboard</a></p>";
+$_SESSION['admin'] = [
+    'adminID'  => (int)$row['adminID'],
+    'public_id'=> (string)$row['public_id'],
+    'username' => (string)$row['username'],
+];
+
+header('Location: ' . BASE_URL . '/admin/');
+exit;
