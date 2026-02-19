@@ -2,11 +2,10 @@
 require_once __DIR__ . '/../server/config/app.php';
 require_once __DIR__ . '/../server/lib/session.php';
 require_once __DIR__ . '/../server/auth/captcha.php';
-$captcha = captcha_generate();
-?>
 
 $captcha = captcha_generate();
 ?>
+
 <!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Register</title></head>

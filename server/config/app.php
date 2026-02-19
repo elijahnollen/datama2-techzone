@@ -1,10 +1,9 @@
 <?php
-// server/config/app.php
 
-// IMPORTANT: set this to your XAMPP folder name.
-// Since i my URL works at http://localhost/auth/..., BASE_URL should be "/auth".
-define('BASE_URL', '/auth');
+define('BASE_URL', '/techzone2'); // <-- CHANGE THIS to your htdocs folder name
 
-// Temporary prototype IDs until full login replaces them
+// Prototype IDs (we will stop using these once login is complete)
 define('PROTOTYPE_CUSTOMER_ID', 1);
 define('PROTOTYPE_EMPLOYEE_ID', 1);
+
+define('CURRENCY_SYMBOL', '₱');

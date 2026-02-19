@@ -1,36 +1,53 @@
 <?php
+require_once __DIR__ . '/../config/app.php';
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../lib/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  http_response_code(405);
-  exit('Method not allowed');
+    header('Location: ' . BASE_URL . '/client/login.php');
+    exit;
 }
 
 $email = trim($_POST['email'] ?? '');
-$pass  = (string)($_POST['password'] ?? '');
+$password = (string)($_POST['password'] ?? '');
+
+if ($email === '' || $password === '') {
+    echo "<p style='color:red;'>Email and password are required.</p>";
+    echo "<p><a href='" . BASE_URL . "/client/login.php'>Back</a></p>";
+    exit;
+}
 
 $pdo = db();
 
+// Find active customer by email
 $stmt = $pdo->prepare("
-  SELECT customerID, password_hash, is_active
+  SELECT customerID, public_id, first_name, last_name, password_hash, is_active
   FROM customer
   WHERE email_address = ?
   LIMIT 1
 ");
 $stmt->execute([$email]);
-$user = $stmt->fetch();
+$row = $stmt->fetch();
 
-if (!$user || (int)$user['is_active'] !== 1) {
-  exit("<p style='color:red;'>Invalid credentials.</p>");
+if (!$row || (int)$row['is_active'] !== 1) {
+    echo "<p style='color:red;'>Invalid login.</p>";
+    echo "<p><a href='" . BASE_URL . "/client/login.php'>Back</a></p>";
+    exit;
 }
 
-if (empty($user['password_hash']) || !password_verify($pass, $user['password_hash'])) {
-  exit("<p style='color:red;'>Invalid credentials.</p>");
+if (empty($row['password_hash']) || !password_verify($password, $row['password_hash'])) {
+    echo "<p style='color:red;'>Invalid login.</p>";
+    echo "<p><a href='" . BASE_URL . "/client/login.php'>Back</a></p>";
+    exit;
 }
 
-session_regenerate_id(true); // recommended after auth :contentReference[oaicite:5]{index=5}
-$_SESSION['customer_id'] = (int)$user['customerID'];
+session_regenerate_id(true);
 
-echo "<h2>Login successful</h2>";
-echo "<p><a href='/client/'>Go to Shop</a></p>";
+$_SESSION['customer'] = [
+    'customerID' => (int)$row['customerID'],
+    'public_id'  => (string)$row['public_id'],
+    'name'       => trim($row['first_name'] . ' ' . $row['last_name']),
+];
+
+header('Location: ' . BASE_URL . '/client/');
+exit;
