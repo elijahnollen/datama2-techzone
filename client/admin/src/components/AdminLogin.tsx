@@ -19,16 +19,19 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
     setIsLoading(true);
 
     try {
-   const response = await fetch('http://localhost/api/admin_login.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-
-    });
+      const response = await fetch('http://localhost/api/admin_login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
       const data = await response.json();
 
       if (data.success) {
+        // --- PERSISTENCE LOGIC ---
+        // Store a simple flag to tell the browser we are logged in
+        localStorage.setItem('isAdminAuthenticated', 'true');
+        // -------------------------
         onLogin();
       } else {
         setError(data.message);
@@ -101,7 +104,6 @@ export function AdminLogin({ onLogin }: AdminLoginProps) {
                   <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">Remember me</label>
                 </div>
                 <button type="button" onClick={() => setShowForgotPassword(true)} className="text-sm font-medium text-blue-600 hover:text-blue-700">
-                  Forgot password?
                 </button>
               </div>
               <button type="submit" disabled={isLoading}
