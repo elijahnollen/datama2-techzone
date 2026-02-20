@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Search, Check, X, Eye, AlertCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Eye, AlertCircle } from 'lucide-react';
 
 interface ReturnRequest {
   id: string;
@@ -7,80 +7,75 @@ interface ReturnRequest {
   customer: string;
   product: string;
   reason: string;
-  amount: number;
-  status: 'Pending' | 'Approved' | 'Rejected' | 'Refunded';
-  requestDate: string;
-  images?: string[];
+  amount: number | string;
+  status: string;
+  date: string;
 }
 
-const mockReturns: ReturnRequest[] = [
-  { 
-    id: 'RET-001', 
-    orderId: 'ORD-045', 
-    customer: 'Juan Dela Cruz', 
-    product: 'ROG Strix G16', 
-    reason: 'Defective - Screen flickering issue', 
-    amount: 75000, 
-    status: 'Pending', 
-    requestDate: '2024-02-10' 
-  },
-  { 
-    id: 'RET-002', 
-    orderId: 'ORD-038', 
-    customer: 'Maria Santos', 
-    product: 'Logitech G Pro', 
-    reason: 'Not as described - Wrong color received', 
-    amount: 8500, 
-    status: 'Approved', 
-    requestDate: '2024-02-09' 
-  },
-  { 
-    id: 'RET-003', 
-    orderId: 'ORD-042', 
-    customer: 'Pedro Reyes', 
-    product: 'RTX 4080', 
-    reason: 'Changed mind - Found better price elsewhere', 
-    amount: 55000, 
-    status: 'Rejected', 
-    requestDate: '2024-02-08' 
-  },
-  { 
-    id: 'RET-004', 
-    orderId: 'ORD-031', 
-    customer: 'Ana Garcia', 
-    product: 'LG Monitor', 
-    reason: 'Damaged in shipping - Cracked screen', 
-    amount: 22000, 
-    status: 'Refunded', 
-    requestDate: '2024-02-07' 
-  },
-];
-
 export function ReturnManagement() {
-  const [returns, setReturns] = useState<ReturnRequest[]>(mockReturns);
+  const [returns, setReturns] = useState<ReturnRequest[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchReturns();
+  }, []);
+
+  const fetchReturns = async () => {
+    try {
+      const response = await fetch('http://localhost/api/get_returns.php');
+      const data = await response.json();
+      
+      if (Array.isArray(data)) {
+        setReturns(data);
+      }
+    } catch (error) {
+      console.error("Connection Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredReturns = returns.filter(ret => {
-    const matchesSearch = ret.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ret.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      ret.orderId.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'All' || ret.status === statusFilter;
+    const id = ret.id?.toLowerCase() || '';
+    const customer = ret.customer?.toLowerCase() || '';
+    const orderId = ret.orderId?.toLowerCase() || '';
+    const search = searchTerm.toLowerCase();
+
+    const matchesSearch = id.includes(search) || customer.includes(search) || orderId.includes(search);
+    
+    const matchesStatus = statusFilter === 'All' || 
+      ret.status?.toLowerCase() === statusFilter.toLowerCase();
+      
     return matchesSearch && matchesStatus;
   });
 
-  const updateReturnStatus = (returnId: string, newStatus: ReturnRequest['status']) => {
-    setReturns(returns.map(ret => 
-      ret.id === returnId ? { ...ret, status: newStatus } : ret
-    ));
+  const updateReturnStatus = async (returnId: string, newStatus: string) => {
+    try {
+      const response = await fetch('http://localhost/api/update_status.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: returnId, status: newStatus })
+      });
+      
+      const result = await response.json();
+      if (result.success) {
+        fetchReturns();
+      }
+    } catch (error) {
+      console.error("Update Error:", error);
+    }
   };
 
-  const getStatusColor = (status: ReturnRequest['status']) => {
-    switch (status) {
-      case 'Pending': return 'bg-yellow-100 text-yellow-700';
-      case 'Approved': return 'bg-blue-100 text-blue-700';
-      case 'Rejected': return 'bg-red-100 text-red-700';
-      case 'Refunded': return 'bg-green-100 text-green-700';
+  const getStatusColor = (status: string) => {
+    const s = status?.toLowerCase();
+    switch (s) {
+      case 'pending': return 'bg-yellow-100 text-yellow-700';
+      case 'refunded': return 'bg-green-100 text-green-700';
+      case 'replaced': return 'bg-purple-100 text-purple-700';
+      case 'store credit': return 'bg-orange-100 text-orange-700';
+      default: return 'bg-gray-100 text-gray-700';
     }
   };
 
@@ -91,24 +86,21 @@ export function ReturnManagement() {
         <p className="text-gray-600 mt-1">Process customer return requests and manage refunds</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {[
-          { label: 'Pending', count: returns.filter(r => r.status === 'Pending').length, status: 'Pending', color: 'yellow' },
-          { label: 'Approved', count: returns.filter(r => r.status === 'Approved').length, status: 'Approved', color: 'blue' },
-          { label: 'Rejected', count: returns.filter(r => r.status === 'Rejected').length, status: 'Rejected', color: 'red' },
-          { label: 'Refunded', count: returns.filter(r => r.status === 'Refunded').length, status: 'Refunded', color: 'green' },
-        ].map((stat) => (
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {['Pending', 'Refunded', 'Replaced', 'Store Credit'].map((status) => (
           <button
-            key={stat.status}
-            onClick={() => setStatusFilter(stat.status)}
+            key={status}
+            onClick={() => setStatusFilter(status)}
             className={`p-4 rounded-lg border-2 transition-all text-left ${
-              statusFilter === stat.status 
+              statusFilter === status 
                 ? 'border-blue-600 bg-blue-50' 
                 : 'border-gray-200 bg-white hover:border-gray-300'
             }`}
           >
-            <div className="text-2xl font-bold text-gray-900">{stat.count}</div>
-            <div className="text-sm text-gray-600 mt-1">{stat.label} Returns</div>
+            <div className="text-xl font-bold text-gray-900">
+              {returns.filter(r => r.status?.toLowerCase() === status.toLowerCase()).length}
+            </div>
+            <div className="text-xs text-gray-600 mt-1">{status}</div>
           </button>
         ))}
       </div>
@@ -128,7 +120,7 @@ export function ReturnManagement() {
             </div>
             <button 
               onClick={() => setStatusFilter('All')}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`px-4 py-2 rounded-lg transition-colors font-medium ${
                 statusFilter === 'All' 
                   ? 'bg-blue-600 text-white' 
                   : 'border border-gray-200 text-gray-700 hover:bg-gray-50'
@@ -148,28 +140,28 @@ export function ReturnManagement() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Reason</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Refund Amount</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
-              {filteredReturns.map((returnReq) => (
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {loading ? (
+                 <tr><td colSpan={9} className="px-6 py-4 text-center text-gray-500">Connecting to database...</td></tr>
+              ) : filteredReturns.length === 0 ? (
+                <tr><td colSpan={9} className="px-6 py-4 text-center text-gray-500">No records found.</td></tr>
+              ) : filteredReturns.map((returnReq) => (
                 <tr key={returnReq.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">{returnReq.id}</td>
-                  <td className="px-6 py-4 text-sm text-blue-600 hover:text-blue-700 cursor-pointer">
-                    {returnReq.orderId}
-                  </td>
+                  <td className="px-6 py-4 text-sm text-blue-600">{returnReq.orderId}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{returnReq.customer}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{returnReq.product}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600 max-w-xs truncate" title={returnReq.reason}>
-                    {returnReq.reason}
-                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600">{returnReq.reason}</td>
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                    ₱{returnReq.amount.toLocaleString()}
+                    ₱{Number(returnReq.amount).toLocaleString()}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{returnReq.requestDate}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">{returnReq.date}</td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(returnReq.status)}`}>
                       {returnReq.status}
@@ -177,35 +169,31 @@ export function ReturnManagement() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <button className="p-1.5 hover:bg-blue-50 rounded text-blue-600" title="View Details">
+                      <button className="p-1.5 hover:bg-gray-100 rounded text-gray-500" title="View Details">
                         <Eye className="w-4 h-4" />
                       </button>
-                      {returnReq.status === 'Pending' && (
-                        <>
+                      
+                      {returnReq.status?.toLowerCase() === 'pending' && (
+                        <div className="flex gap-1">
                           <button 
-                            onClick={() => updateReturnStatus(returnReq.id, 'Approved')}
-                            className="p-1.5 hover:bg-green-50 rounded text-green-600" 
-                            title="Approve"
+                            onClick={() => updateReturnStatus(returnReq.id, 'Refunded')} 
+                            className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded hover:bg-green-200"
                           >
-                            <Check className="w-4 h-4" />
+                            Refund
                           </button>
                           <button 
-                            onClick={() => updateReturnStatus(returnReq.id, 'Rejected')}
-                            className="p-1.5 hover:bg-red-50 rounded text-red-600" 
-                            title="Reject"
+                            onClick={() => updateReturnStatus(returnReq.id, 'Replaced')} 
+                            className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded hover:bg-purple-200"
                           >
-                            <X className="w-4 h-4" />
+                            Replace
                           </button>
-                        </>
-                      )}
-                      {returnReq.status === 'Approved' && (
-                        <button 
-                          onClick={() => updateReturnStatus(returnReq.id, 'Refunded')}
-                          className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700" 
-                          title="Process Refund"
-                        >
-                          Process Refund
-                        </button>
+                          <button 
+                            onClick={() => updateReturnStatus(returnReq.id, 'Store Credit')} 
+                            className="px-2 py-1 bg-orange-100 text-orange-700 text-xs font-medium rounded hover:bg-orange-200"
+                          >
+                            Credit
+                          </button>
+                        </div>
                       )}
                     </div>
                   </td>
@@ -213,13 +201,6 @@ export function ReturnManagement() {
               ))}
             </tbody>
           </table>
-        </div>
-
-        <div className="p-4 border-t border-gray-200">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <AlertCircle className="w-4 h-4" />
-            <span>Pending returns require approval within 48 hours of submission</span>
-          </div>
         </div>
       </div>
     </div>
