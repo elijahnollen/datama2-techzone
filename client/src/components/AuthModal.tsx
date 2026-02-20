@@ -1,21 +1,19 @@
-import { X, Mail, Lock, User as UserIcon } from 'lucide-react';
+import { X, Mail, Lock } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router'; 
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialMode?: 'login' | 'signup';
 }
 
-export function AuthModal({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) {
-  const [mode, setMode] = useState<'login' | 'signup'>(initialMode);
+export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, signup } = useAuth();
+  const { login } = useAuth();
 
   if (!isOpen) return null;
 
@@ -25,134 +23,94 @@ export function AuthModal({ isOpen, onClose, initialMode = 'login' }: AuthModalP
     setLoading(true);
 
     try {
-      if (mode === 'login') {
-        await login(email, password);
-      } else {
-        if (!name.trim()) {
-          setError('Please enter your name');
-          setLoading(false);
-          return;
-        }
-        await signup(email, password, name);
-      }
+      await login(email, password);
       onClose();
-      // Reset form
       setEmail('');
       setPassword('');
-      setName('');
     } catch (err: any) {
-      setError(err.message || 'Something went wrong');
+      setError(err.message || 'Login failed');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-2xl font-bold">
-            {mode === 'login' ? 'Welcome Back' : 'Create Account'}
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+      <div className="bg-white rounded-[24px] shadow-2xl max-w-md w-full overflow-hidden flex flex-col border border-zinc-100">
+        
+        {/* Header - Strictly Login */}
+        <div className="flex items-center justify-between p-8 border-b border-zinc-50">
+          <h2 className="text-2xl font-bold italic text-black">Welcome Back</h2>
+          <button 
+            onClick={onClose} 
+            className="text-zinc-400 hover:text-zinc-600 transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        {/* Login Form */}
+        <form onSubmit={handleSubmit} className="p-8 space-y-5">
           {error && (
-            <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm">
+            <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-[11px] font-bold border border-red-100 text-center">
               {error}
             </div>
           )}
 
-          {mode === 'signup' && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
-              </label>
-              <div className="relative">
-                <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                  placeholder="John Doe"
-                  required={mode === 'signup'}
-                />
-              </div>
-            </div>
-          )}
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="space-y-1">
+            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">
               Email Address
             </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <div className="flex items-center bg-zinc-50 border border-zinc-200 rounded-xl focus-within:ring-2 focus-within:ring-cyan-500 transition-all px-4">
+              <Mail className="w-4 h-4 text-zinc-400 shrink-0" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full bg-transparent py-3.5 pl-3 text-sm outline-none text-zinc-700 placeholder:text-zinc-300"
                 placeholder="john@example.com"
                 required
               />
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="space-y-1">
+            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest ml-1">
               Password
             </label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <div className="flex items-center bg-zinc-50 border border-zinc-200 rounded-xl focus-within:ring-2 focus-within:ring-cyan-500 transition-all px-4">
+              <Lock className="w-4 h-4 text-zinc-400 shrink-0" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                className="w-full bg-transparent py-3.5 pl-3 text-sm outline-none text-zinc-700 placeholder:text-zinc-300"
                 placeholder="••••••••"
                 required
-                minLength={6}
               />
             </div>
-            {mode === 'signup' && (
-              <p className="text-xs text-gray-500 mt-1">
-                At least 6 characters
-              </p>
-            )}
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-zinc-800 transition-all disabled:bg-zinc-400 uppercase tracking-widest text-[12px] shadow-lg mt-2"
           >
-            {loading ? 'Please wait...' : mode === 'login' ? 'Log In' : 'Sign Up'}
+            {loading ? 'Verifying...' : 'Log In'}
           </button>
         </form>
 
-        {/* Toggle Mode */}
-        <div className="px-6 pb-6 text-center">
-          <p className="text-sm text-gray-600">
-            {mode === 'login' ? "Don't have an account?" : 'Already have an account?'}
-            {' '}
-            <button
-              onClick={() => {
-                setMode(mode === 'login' ? 'signup' : 'login');
-                setError('');
-              }}
-              className="text-blue-600 hover:text-blue-700 font-medium"
+        {/* Footer - Link to the Full Page */}
+        <div className="px-8 pb-10 text-center">
+          <p className="text-sm text-zinc-500 font-medium">
+            Don't have an account?{' '}
+            <Link
+              to="/signup"
+              onClick={onClose}
+              className="text-cyan-600 hover:text-cyan-700 font-bold underline-offset-4 hover:underline"
             >
-              {mode === 'login' ? 'Sign Up' : 'Log In'}
-            </button>
+              Sign Up
+            </Link>
           </p>
         </div>
       </div>

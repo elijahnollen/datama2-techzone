@@ -24,7 +24,7 @@ import { Product } from '../types';
  * - Development: 'http://localhost:8000/api'
  * - Production: 'https://api.techzone.com'
  */
-const API_BASE_URL = 'YOUR_PHP_API_ENDPOINT_HERE';
+export const API_BASE_URL = 'http://localhost/api';
 
 /**
  * Enable/Disable fallback mock data
@@ -853,7 +853,7 @@ export async function testConnection(): Promise<boolean> {
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/health`, {
+    const response = await fetch(`${API_BASE_URL}/health.php`, {
       method: 'GET',
       headers: getHeaders(),
       signal: AbortSignal.timeout(3000),

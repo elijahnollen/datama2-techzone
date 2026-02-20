@@ -14,6 +14,7 @@ import { Account } from './pages/Account';
 import { Wallet } from './pages/Wallet';
 import { Messages } from './pages/Messages';
 import { Profile } from './pages/Profile';
+// REMOVED: ForgotPassword import
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
       { path: 'cart', Component: Cart },
       { path: 'product/:id', Component: ProductDetail },
       { path: 'login', Component: Login },
-      { path: 'signup', Component: SignUp },
+      { path: 'signup', Component: SignUp }, 
       { path: 'product-results', Component: ProductResults },
       { path: 'orders', Component: MyOrders },
       { path: 'my-orders', Component: MyOrders },
@@ -36,6 +37,7 @@ export const router = createBrowserRouter([
       { path: 'messages', Component: Messages },
       { path: 'profile', Component: Profile },
       { path: 'favorites', Component: Home },
+      // REMOVED: both forgot-password paths
     ],
   },
 ]);
