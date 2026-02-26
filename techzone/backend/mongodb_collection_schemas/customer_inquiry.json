@@ -1,0 +1,55 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "customer_public_id",
+      "customer_name",
+      "customer_email",
+      "subject",
+      "status",
+      "created_at",
+      "updated_at",
+      "last_message_at",
+      "message_count"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "customer_id": {
+        "bsonType": "string"
+      },
+      "customer_public_id": {
+        "bsonType": "string"
+      },
+      "customer_name": {
+        "bsonType": "string"
+      },
+      "customer_email": {
+        "bsonType": "string"
+      },
+      "contact_number": {
+        "bsonType": "string"
+      },
+      "subject": {
+        "bsonType": "string"
+      },
+      "status": {
+        "bsonType": "string"
+      },
+      "created_at": {
+        "bsonType": "string"
+      },
+      "updated_at": {
+        "bsonType": "string"
+      },
+      "last_message_at": {
+        "bsonType": "string"
+      },
+      "message_count": {
+        "bsonType": "int"
+      }
+    }
+  }
+}

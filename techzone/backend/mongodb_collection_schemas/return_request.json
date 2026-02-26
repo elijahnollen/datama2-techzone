@@ -1,0 +1,139 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "created_at",
+      "customer_public_id",
+      "description",
+      "evidence_photos",
+      "order_public_id",
+      "preferences",
+      "reason",
+      "refund_history_status",
+      "return_status_history",
+      "return_public_id",
+      "returned_item",
+      "status",
+      "updated_at"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "created_at": {
+        "bsonType": "string"
+      },
+      "customer_public_id": {
+        "bsonType": "string"
+      },
+      "description": {
+        "bsonType": "string"
+      },
+      "evidence_photos": {
+        "bsonType": "array"
+      },
+      "order_public_id": {
+        "bsonType": "string"
+      },
+      "preferences": {
+        "bsonType": "object",
+        "properties": {
+          "refund_method": {
+            "bsonType": "string"
+          },
+          "shipment_method": {
+            "bsonType": "string"
+          }
+        },
+        "required": [
+          "refund_method",
+          "shipment_method"
+        ]
+      },
+      "reason": {
+        "bsonType": "string"
+      },
+      "refund_history_status": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "properties": {
+            "remarks": {
+              "bsonType": "string"
+            },
+            "status": {
+              "bsonType": "string"
+            },
+            "timestamp": {
+              "bsonType": "string"
+            },
+            "updated_by": {
+              "bsonType": "string"
+            }
+          },
+          "required": [
+            "remarks",
+            "status",
+            "timestamp",
+            "updated_by"
+          ]
+        }
+      },
+      "return_status_history": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "properties": {
+            "remarks": {
+              "bsonType": "string"
+            },
+            "status": {
+              "bsonType": "string"
+            },
+            "timestamp": {
+              "bsonType": "string"
+            },
+            "updated_by": {
+              "bsonType": "string"
+            }
+          },
+          "required": [
+            "remarks",
+            "status",
+            "timestamp",
+            "updated_by"
+          ]
+        }
+      },
+      "return_public_id": {
+        "bsonType": "string"
+      },
+      "returned_item": {
+        "bsonType": "object",
+        "properties": {
+          "product_name": {
+            "bsonType": "string"
+          },
+          "product_public_id": {
+            "bsonType": "string"
+          },
+          "unit_price": {
+            "bsonType": "double"
+          }
+        },
+        "required": [
+          "product_name",
+          "product_public_id",
+          "unit_price"
+        ]
+      },
+      "status": {
+        "bsonType": "string"
+      },
+      "updated_at": {
+        "bsonType": "string"
+      }
+    }
+  }
+}

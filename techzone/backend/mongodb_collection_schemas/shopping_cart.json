@@ -1,0 +1,68 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "customer_public_id",
+      "items",
+      "cart_summary",
+      "last_updated"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "customer_public_id": {
+        "bsonType": "string"
+      },
+      "items": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "required": [
+            "product_public_id",
+            "quantity"
+          ],
+          "properties": {
+            "product_public_id": {
+              "bsonType": "string"
+            },
+            "product_name": {
+              "bsonType": "string"
+            },
+            "quantity": {
+              "bsonType": "int"
+            },
+            "price_at_addition": {
+              "bsonType": "double"
+            },
+            "image_url": {
+              "bsonType": "string"
+            },
+            "added_at": {
+              "bsonType": "string"
+            }
+          }
+        }
+      },
+      "cart_summary": {
+        "bsonType": "object",
+        "required": [
+          "total_items",
+          "subtotal_price"
+        ],
+        "properties": {
+          "total_items": {
+            "bsonType": "int"
+          },
+          "subtotal_price": {
+            "bsonType": "double"
+          }
+        }
+      },
+      "last_updated": {
+        "bsonType": "string"
+      }
+    }
+  }
+}

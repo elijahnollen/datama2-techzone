@@ -1,0 +1,638 @@
+[{
+  "_id": {
+    "$oid": "6997d1092c5638f654d42e75"
+  },
+  "product_public_id": "PR-A04F9FA2",
+  "brand": "AMD",
+  "model_name": "Ryzen 5 5600",
+  "category": "Computer Components",
+  "sub_category": "Processor (CPU)",
+  "display_price": 8200,
+  "is_in_stock": true,
+  "availability_status": "AVAILABLE",
+  "short_description": "A high-performance 6-core desktop processor capable of handling modern gaming and multitasking workloads efficiently.",
+  "long_description": "The AMD Ryzen 5 5600 features 6 cores and 12 threads, built on the efficient Zen 3 architecture. It delivers excellent frame rates in competitive gaming and snappy performance for content creation, making it a top value choice for mid-range PC builds.",
+  "specifications": {
+    "socket": "AM4",
+    "cores_threads": "6 Cores / 12 Threads",
+    "base_clock": "3.5 GHz",
+    "boost_clock": "Up to 4.4 GHz",
+    "cache": "32MB L3",
+    "tdp": "65W"
+  },
+  "image_url": "https://cdn.cs.1worldsync.com/40/5a/405a0849-abcc-4728-9cac-4383b173650a.jpg",
+  "tags": [
+    "CPU",
+    "Gaming",
+    "AM4",
+    "Ryzen5",
+    "6Core"
+  ],
+  "ui_flags": {
+    "is_featured": true,
+    "badge": "Top Seller"
+  },
+  "reviews": {
+    "average_rating": 0,
+    "total_reviews": 0,
+    "rating_sum": 0
+  }
+},
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e76"
+    },
+    "product_public_id": "PR-A04FA2E8",
+    "brand": "NVIDIA",
+    "model_name": "RTX 4060",
+    "category": "Computer Components",
+    "sub_category": "Graphics Card (GPU)",
+    "display_price": 18500,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "An efficient mid-range graphics card designed for high-framerate 1080p gaming with AI-powered graphics.",
+    "long_description": "The RTX 4060 brings the Ada Lovelace architecture to the mainstream, featuring DLSS 3 frame generation for massive performance boosts. It is highly power-efficient and supports real-time ray tracing, making it perfect for modern AAA titles.",
+    "specifications": {
+      "vram": "8GB GDDR6",
+      "cuda_cores": "3,072",
+      "boost_clock": "~2.46 GHz",
+      "bus_width": "128-bit",
+      "power_connector": "1x 8-pin"
+    },
+    "image_url": "https://www.licbplus.com.dz/storage/images/products/HEEh46v9nWNpIfr0KK8jj79KgpQk3FMdtVlXu6Fm.jpg",
+    "tags": [
+      "GPU",
+      "NVIDIA",
+      "RayTracing",
+      "DLSS3",
+      "1080pGaming"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": "New Arrival"
+    },
+    "reviews": {
+      "total_reviews": 1,
+      "rating_sum": 5,
+      "average_rating": 5
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e77"
+    },
+    "product_public_id": "PR-A04FA411",
+    "brand": "Kingston",
+    "model_name": "8GB DDR4 RAM",
+    "category": "Computer Components",
+    "sub_category": "Memory (RAM)",
+    "display_price": 1500,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "A standard 8GB memory module essential for running operating systems and applications smoothly.",
+    "long_description": "This DDR4 memory stick provides the temporary storage your PC needs to access data quickly. A single 8GB stick is the entry-level standard for modern PCs.",
+    "specifications": {
+      "capacity": "8GB",
+      "speed": "3200MHz",
+      "type": "DDR4 DIMM",
+      "voltage": "1.35V",
+      "latency": "CL16"
+    },
+    "image_url": "https://www.dateks.lv/images/pic/2400/2400/375/1171.jpg",
+    "tags": [
+      "RAM",
+      "DDR4",
+      "Memory",
+      "PCBuild"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": null
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e78"
+    },
+    "product_public_id": "PR-A04FA4C7",
+    "brand": "Logitech",
+    "model_name": "Logitech G102",
+    "category": "Peripherals",
+    "sub_category": "Gaming Mouse",
+    "display_price": 995,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "A fan-favorite budget gaming mouse with a classic design and vibrant RGB lighting.",
+    "long_description": "The Logitech G102 features the Mercury sensor for accurate tracking and LightSync RGB for customizable aesthetics. Its 6-button classic shape is comfortable for all grip styles.",
+    "specifications": {
+      "dpi": "200 - 8,000",
+      "buttons": "6 Programmable",
+      "sensor": "Mercury Sensor",
+      "lighting": "LightSync RGB",
+      "weight": "85g"
+    },
+    "image_url": "https://i.ebayimg.com/images/g/2skAAOSwLdRk4bpH/s-l1600.webp",
+    "tags": [
+      "Mouse",
+      "Gaming",
+      "LogitechG",
+      "RGB"
+    ],
+    "ui_flags": {
+      "is_featured": true,
+      "badge": "Best Value"
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e79"
+    },
+    "product_public_id": "PR-A04FA575",
+    "brand": "Nvision",
+    "model_name": "24\" IPS Monitor",
+    "category": "Peripherals",
+    "sub_category": "Display / Monitor",
+    "display_price": 7500,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "A 24-inch Full HD display offering vibrant colors and wide viewing angles.",
+    "long_description": "Ideally suited for both office work and gaming, this monitor uses an IPS panel to ensure consistent color accuracy from any angle.",
+    "specifications": {
+      "panel_type": "IPS",
+      "resolution": "1920 x 1080",
+      "refresh_rate": "75Hz/144Hz",
+      "response_time": "1ms-5ms",
+      "ports": "HDMI, VGA/DP"
+    },
+    "image_url": "https://media.us.lg.com/transform/ecomm-PDPGallery-1100x730/807c310d-f3dd-47ea-837c-69af9748b4de/24BR400-B-Product-Image-Gallery-front-view-with-infill?io=transform:fill,width:596",
+    "tags": [
+      "Monitor",
+      "IPS",
+      "1080p",
+      "FHD"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": null
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e7a"
+    },
+    "product_public_id": "PR-A04FA618",
+    "brand": "Rakk",
+    "model_name": "Mech Keyboard",
+    "category": "Peripherals",
+    "sub_category": "Keyboard",
+    "display_price": 2500,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "A durable keyboard using mechanical switches for superior tactile feedback.",
+    "long_description": "Unlike standard membrane keyboards, a mechanical keyboard uses individual physical switches for each key, offering satisfying sound and feel.",
+    "specifications": {
+      "switch_type": "Blue, Red, or Brown",
+      "layout": "Full Size, TKL, or 60%",
+      "connectivity": "Wired USB-C / Wireless",
+      "lifespan": "50 million+ keystrokes"
+    },
+    "image_url": "https://hecategaming.com/cdn/shop/files/G4K_keyboard_product_pictures_gray_1.webp?v=1711004186&width=1000",
+    "tags": [
+      "MechanicalKeyboard",
+      "Clicky",
+      "RGB",
+      "Custom"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": "Customizable"
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e7b"
+    },
+    "product_public_id": "PR-A04FA68F",
+    "brand": "Kingston",
+    "model_name": "1TB NVMe SSD",
+    "category": "Storage",
+    "sub_category": "Solid State Drive",
+    "display_price": 3500,
+    "is_in_stock": false,
+    "availability_status": "SOLD OUT",
+    "short_description": "A high-speed storage drive that plugs directly into the motherboard for lightning-fast load times.",
+    "long_description": "Utilizing the PCIe interface, this NVMe SSD is significantly faster than traditional SATA SSDs and HDDs. Holds a large library of games with ease.",
+    "specifications": {
+      "form_factor": "M.2 2280",
+      "interface": "PCIe Gen 3.0/4.0",
+      "capacity": "1TB",
+      "read_speed": "2000-5000MB/s"
+    },
+    "image_url": "https://images.samsung.com/is/image/samsung/p6pim/us/mz-v9s1t0b-am/gallery/us-990-evo-plus-nvme-m2-ssd-mz-v9s1t0b-am-550538037?$PD_GALLERY_PNG$?$default-jpg$?$product-details-jpg$",
+    "tags": [
+      "SSD",
+      "NVMe",
+      "Storage",
+      "FastBoot"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": "Out of Stock"
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e7c"
+    },
+    "product_public_id": "PR-A04FA6FF",
+    "brand": "AMD",
+    "model_name": "Ryzen 7 5700X",
+    "category": "Computer Components",
+    "sub_category": "Processor (CPU)",
+    "display_price": 12000,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "A powerful 8-core processor that balances high-end gaming performance with productivity efficiency.",
+    "long_description": "The Ryzen 7 5700X is ideal for users who stream, edit video, and game simultaneously without generating excessive heat.",
+    "specifications": {
+      "socket": "AM4",
+      "cores_threads": "8 Cores / 16 Threads",
+      "base_clock": "3.4 GHz",
+      "boost_clock": "Up to 4.6 GHz",
+      "tdp": "65W"
+    },
+    "image_url": "https://www.gigantec.com.br/media/catalog/product/cache/66c3fa0fb26d248d0ca40a64a387c3da/2/1/21926_1.jpg",
+    "tags": [
+      "CPU",
+      "Ryzen7",
+      "8Core",
+      "Productivity"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": "Efficient"
+    },
+    "reviews": {
+      "total_reviews": 1,
+      "rating_sum": 5,
+      "average_rating": 5
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e7d"
+    },
+    "product_public_id": "PR-A04FA77F",
+    "brand": "ASUS",
+    "model_name": "B550m Motherboard",
+    "category": "Computer Components",
+    "sub_category": "Motherboard",
+    "display_price": 6500,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "A micro-ATX motherboard compatible with Ryzen 3000/5000 series CPUs.",
+    "long_description": "The B550m chipset offers the best balance of features and price for AM4 builders, supporting the faster PCIe 4.0 standard.",
+    "specifications": {
+      "socket": "AM4",
+      "chipset": "AMD B550",
+      "form_factor": "Micro-ATX",
+      "ram_slots": "4 x DDR4"
+    },
+    "image_url": "https://capital.lv/media/catalog/product/cache/f6e52ba044298d3891329758ffbf5fb4/1/9/199818c0-cfc1-4c66-9d8b-35086f9e17a0.jpg",
+    "tags": [
+      "Motherboard",
+      "AM4",
+      "B550",
+      "mATX"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": null
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e7e"
+    },
+    "product_public_id": "PR-A04FA7EB",
+    "brand": "NVIDIA",
+    "model_name": "RTX 4070",
+    "category": "Computer Components",
+    "sub_category": "Graphics Card (GPU)",
+    "display_price": 38000,
+    "is_in_stock": false,
+    "availability_status": "SOLD OUT",
+    "short_description": "A high-end graphics card built for dominating 1440p gaming and enabling 4K entry-level performance.",
+    "long_description": "The RTX 4070 delivers a massive leap in performance and AI-powered graphics with DLSS 3. Favored for enthusiast gamers.",
+    "specifications": {
+      "vram": "12GB GDDR6X",
+      "cuda_cores": "5,888",
+      "bus_width": "192-bit",
+      "tdp": "~200W"
+    },
+    "image_url": "https://www.godukkan.com/media/catalog/product/cache/09a5c991ad7e99400d59ad6dff0e1536/a/s/rtx-4070-12-ddr6x-oc-90yv0iz2-m0na00.jpg",
+    "tags": [
+      "GPU",
+      "HighEnd",
+      "1440pGaming",
+      "NVIDIA"
+    ],
+    "ui_flags": {
+      "is_featured": true,
+      "badge": "Enthusiast"
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e7f"
+    },
+    "product_public_id": "PR-A04FA854",
+    "brand": "Corsair",
+    "model_name": "650W PSU",
+    "category": "Computer Components",
+    "sub_category": "Power Supply Unit",
+    "display_price": 3000,
+    "is_in_stock": false,
+    "availability_status": "SOLD OUT",
+    "short_description": "A reliable power supply unit capable of driving mid-range gaming PC builds safely.",
+    "long_description": "Provides sufficient headroom for systems with Ryzen 5/7 CPUs. Often comes with 80+ Bronze or Gold efficiency.",
+    "specifications": {
+      "wattage": "650 Watts",
+      "efficiency": "80 Plus Bronze/Gold",
+      "modularity": "Non/Semi-modular",
+      "fan_size": "120mm"
+    },
+    "image_url": "https://microless.com/cdn/products/8b397d0e1c0879aa8b5b0ca8bd9ab3cf-md.jpg",
+    "tags": [
+      "PSU",
+      "PowerSupply",
+      "650W",
+      "Bronze"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": null
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e80"
+    },
+    "product_public_id": "PR-A04FA8BE",
+    "brand": "Logitech",
+    "model_name": "Webcam 1080p",
+    "category": "Peripherals",
+    "sub_category": "Camera / Webcam",
+    "display_price": 1200,
+    "is_in_stock": false,
+    "availability_status": "SOLD OUT",
+    "short_description": "A high-definition USB camera providing clear video for streaming and calls.",
+    "long_description": "Captures video at 1920x1080 resolution. Typically includes a built-in microphone and monitor mount.",
+    "specifications": {
+      "resolution": "1080p",
+      "fps": "30fps",
+      "focus": "Auto/Fixed",
+      "connection": "USB 2.0/3.0"
+    },
+    "image_url": "https://shopowltech.com/media/catalog/product/cache/26228c64a1d76a1479e7cc55771b2e97/c/b/cbe58144Hrayzan_201080P_20Webcam_1.jpeg",
+    "tags": [
+      "Webcam",
+      "Streaming",
+      "1080p",
+      "VideoCall"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": null
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e81"
+    },
+    "product_public_id": "PR-A04FA92E",
+    "brand": "Secretlab",
+    "model_name": "Gaming Chair",
+    "category": "Furniture / Accessories",
+    "sub_category": "Chair",
+    "display_price": 8000,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "An ergonomic racing-style chair designed for long gaming sessions.",
+    "long_description": "Features high backrests, lumbar support cushions, and adjustable armrests to help maintain posture and comfort.",
+    "specifications": {
+      "material": "PU Leather/Fabric",
+      "recline": "90° to 160°",
+      "lift": "Class 4 Gas Lift",
+      "base": "5-star base"
+    },
+    "image_url": "https://aerocool.io/wp-content/uploads/2018/05/P7-GC1-Air-Infographic700x700px-01.jpg",
+    "tags": [
+      "GamingChair",
+      "Ergonomic",
+      "Setup",
+      "Comfort"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": "Ergonomic"
+    },
+    "reviews": {
+      "total_reviews": 1,
+      "rating_sum": 5,
+      "average_rating": 5
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e82"
+    },
+    "product_public_id": "PR-A04FA9AC",
+    "brand": "Generic",
+    "model_name": "Ring Light",
+    "category": "Accessories / Studio Gear",
+    "sub_category": "Lighting",
+    "display_price": 850,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "A circular LED light that provides even, shadow-free illumination.",
+    "long_description": "Creates a 'halo' catchlight in the eyes and evenly lights the face. Usually comes with adjustable color temperatures.",
+    "specifications": {
+      "diameter": "10-18 inch",
+      "light_type": "LED",
+      "temp": "3000K-6000K",
+      "power": "USB/AC"
+    },
+    "image_url": "https://static01.galaxus.com/productimages/3/1/1/8/5/1/9/7/5/5/1/6/2/9/8/2/5/7/5/019c6732-6895-7c86-ac4c-2c212b5da345_1000.avif",
+    "tags": [
+      "RingLight",
+      "Streaming",
+      "Lighting",
+      "ContentCreation"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": "Streamer Gear"
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e83"
+    },
+    "product_public_id": "PR-A04FAA1C",
+    "brand": "Maono",
+    "model_name": "Microphone USB",
+    "category": "Audio / Peripherals",
+    "sub_category": "Microphone",
+    "display_price": 2500,
+    "is_in_stock": true,
+    "availability_status": "AVAILABLE",
+    "short_description": "A plug-and-play condenser microphone designed for broadcast-quality voice audio.",
+    "long_description": "Connecting via a single USB cable, this mic is ideal for streamers and podcasters wanting professional sound without a complex setup.",
+    "specifications": {
+      "type": "Condenser",
+      "pattern": "Cardioid",
+      "connection": "USB Type-A/C",
+      "sample_rate": "48kHz / 16-bit"
+    },
+    "image_url": "https://7bd.com/media/catalog/product/cache/067382e3ac45a73f15ea67fe6e40ccf8/1/7/1706806547_1762233.jpg",
+    "tags": [
+      "Microphone",
+      "Streaming",
+      "Audio",
+      "USB"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": "Plug & Play"
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e84"
+    },
+    "product_public_id": "PR-A04FAA86",
+    "brand": "Creative",
+    "model_name": "Sound Card",
+    "category": "Audio / Peripherals",
+    "sub_category": "Audio Interface",
+    "display_price": 1500,
+    "is_in_stock": false,
+    "availability_status": "SOLD OUT",
+    "short_description": "An external audio processing unit used to manage microphone input and sound effects.",
+    "long_description": "Used by live streamers for voice changing and adding effects like applause or laughter in real-time.",
+    "specifications": {
+      "interface": "USB / 3.5mm",
+      "channels": "2.0 / 7.1",
+      "effects": "Reverb, Pitch Shift",
+      "battery": "Rechargeable"
+    },
+    "image_url": "https://img.fruugo.com/product/3/06/1674267063_max.jpg",
+    "tags": [
+      "SoundCard",
+      "AudioInterface",
+      "V8",
+      "Mixing"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": null
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6997d1092c5638f654d42e85"
+    },
+    "product_public_id": "PR-A04FAAF8",
+    "brand": "NVIDIA",
+    "model_name": "RTX 3060",
+    "category": "Computer Components",
+    "sub_category": "Graphics Card (GPU)",
+    "display_price": 18000,
+    "is_in_stock": false,
+    "availability_status": "SOLD OUT",
+    "short_description": "The previous-generation value king, famous for its massive 12GB VRAM buffer.",
+    "long_description": "Remains highly popular for high-resolution textures. Supports Ray Tracing and DLSS 2, making it a reliable workhorse.",
+    "specifications": {
+      "vram": "12GB GDDR6",
+      "cuda_cores": "3,584",
+      "bus_width": "192-bit",
+      "tdp": "170W"
+    },
+    "image_url": "https://capital.lv/media/catalog/product/cache/f6e52ba044298d3891329758ffbf5fb4/6/3/632930e7-ca1a-4359-9b60-2998945bfa38.jpg",
+    "tags": [
+      "GPU",
+      "NVIDIA",
+      "RTX3060",
+      "12GBVRAM"
+    ],
+    "ui_flags": {
+      "is_featured": false,
+      "badge": "Legendary Value"
+    },
+    "reviews": {
+      "average_rating": 0,
+      "total_reviews": 0,
+      "rating_sum": 0
+    }
+  }]

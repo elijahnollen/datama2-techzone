@@ -1,0 +1,208 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "created_at",
+      "customer_public_id",
+      "items",
+      "logistics",
+      "order_public_id",
+      "order_status",
+      "payment",
+      "payment_history_status",
+      "shipping_address",
+      "status_history",
+      "updated_at"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "created_at": {
+        "bsonType": "string"
+      },
+      "customer_public_id": {
+        "bsonType": "string"
+      },
+      "items": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "properties": {
+            "image_url": {
+              "bsonType": "string"
+            },
+            "price_at_sale": {
+              "bsonType": "double"
+            },
+            "product_name": {
+              "bsonType": "string"
+            },
+            "product_public_id": {
+              "bsonType": "string"
+            },
+            "quantity": {
+              "bsonType": "int"
+            }
+          },
+          "required": [
+            "image_url",
+            "price_at_sale",
+            "product_name",
+            "product_public_id",
+            "quantity"
+          ]
+        }
+      },
+      "logistics": {
+        "bsonType": "object",
+        "properties": {
+          "carrier": {
+            "bsonType": [
+              "null",
+              "string"
+            ]
+          },
+          "tracking_number": {
+            "bsonType": [
+              "null",
+              "string"
+            ]
+          }
+        },
+        "required": [
+          "carrier",
+          "tracking_number"
+        ]
+      },
+      "order_public_id": {
+        "bsonType": "string"
+      },
+      "order_status": {
+        "bsonType": "string"
+      },
+      "payment": {
+        "bsonType": "object",
+        "properties": {
+          "grand_total": {
+            "bsonType": "double"
+          },
+          "payment_method": {
+            "bsonType": "string"
+          },
+          "payment_status": {
+            "bsonType": "string"
+          },
+          "subtotal": {
+            "bsonType": "double"
+          },
+          "transaction_reference": {
+            "bsonType": "string"
+          }
+        },
+        "required": [
+          "grand_total",
+          "payment_method",
+          "payment_status",
+          "subtotal",
+          "transaction_reference"
+        ]
+      },
+      "payment_history_status": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "properties": {
+            "remarks": {
+              "bsonType": "string"
+            },
+            "status": {
+              "bsonType": "string"
+            },
+            "timestamp": {
+              "bsonType": "string"
+            },
+            "updated_by": {
+              "bsonType": "string"
+            }
+          },
+          "required": [
+            "remarks",
+            "status",
+            "timestamp",
+            "updated_by"
+          ]
+        }
+      },
+      "shipping_address": {
+        "bsonType": "object",
+        "properties": {
+          "barangay": {
+            "bsonType": "string"
+          },
+          "city_municipality": {
+            "bsonType": "string"
+          },
+          "email": {
+            "bsonType": "string"
+          },
+          "full_name": {
+            "bsonType": "string"
+          },
+          "phone": {
+            "bsonType": "string"
+          },
+          "province": {
+            "bsonType": "string"
+          },
+          "street_address": {
+            "bsonType": "string"
+          },
+          "zip_code": {
+            "bsonType": "string"
+          }
+        },
+        "required": [
+          "barangay",
+          "city_municipality",
+          "email",
+          "full_name",
+          "phone",
+          "province",
+          "street_address",
+          "zip_code"
+        ]
+      },
+      "status_history": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "object",
+          "properties": {
+            "remarks": {
+              "bsonType": "string"
+            },
+            "status": {
+              "bsonType": "string"
+            },
+            "timestamp": {
+              "bsonType": "string"
+            },
+            "updated_by": {
+              "bsonType": "string"
+            }
+          },
+          "required": [
+            "remarks",
+            "status",
+            "timestamp",
+            "updated_by"
+          ]
+        }
+      },
+      "updated_at": {
+        "bsonType": "string"
+      }
+    }
+  }
+}

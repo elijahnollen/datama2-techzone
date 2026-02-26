@@ -1,0 +1,41 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "product_public_id",
+      "customer_public_id",
+      "customer_name",
+      "rating",
+      "comment",
+      "is_verified_purchase",
+      "created_at"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "product_public_id": {
+        "bsonType": "string"
+      },
+      "customer_public_id": {
+        "bsonType": "string"
+      },
+      "customer_name": {
+        "bsonType": "string"
+      },
+      "rating": {
+        "bsonType": "int"
+      },
+      "comment": {
+        "bsonType": "string"
+      },
+      "is_verified_purchase": {
+        "bsonType": "bool"
+      },
+      "created_at": {
+        "bsonType": "string"
+      }
+    }
+  }
+}

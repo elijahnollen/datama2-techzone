@@ -1,0 +1,100 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "product_public_id",
+      "product_id",
+      "model_name",
+      "category",
+      "display_price",
+      "stock_level",
+      "is_active",
+      "is_in_stock",
+      "availability_status",
+      "updated_at"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "product_public_id": {
+        "bsonType": "string"
+      },
+      "product_id": {
+        "bsonType": "int"
+      },
+      "brand": {
+        "bsonType": "string"
+      },
+      "model_name": {
+        "bsonType": "string"
+      },
+      "product_name": {
+        "bsonType": "string"
+      },
+      "category": {
+        "bsonType": "string"
+      },
+      "sub_category": {
+        "bsonType": "string"
+      },
+      "display_price": {
+        "bsonType": "double"
+      },
+      "stock_level": {
+        "bsonType": "int"
+      },
+      "is_active": {
+        "bsonType": "bool"
+      },
+      "is_in_stock": {
+        "bsonType": "bool"
+      },
+      "availability_status": {
+        "bsonType": "string"
+      },
+      "short_description": {
+        "bsonType": "string"
+      },
+      "long_description": {
+        "bsonType": "string"
+      },
+      "specifications": {
+        "bsonType": "object"
+      },
+      "image_url": {
+        "bsonType": "string"
+      },
+      "tags": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        }
+      },
+      "ui_flags": {
+        "bsonType": "array",
+        "items": {
+          "bsonType": "string"
+        }
+      },
+      "reviews": {
+        "bsonType": "object",
+        "properties": {
+          "average_rating": {
+            "bsonType": "double"
+          },
+          "total_reviews": {
+            "bsonType": "int"
+          },
+          "rating_sum": {
+            "bsonType": "double"
+          }
+        }
+      },
+      "updated_at": {
+        "bsonType": "string"
+      }
+    }
+  }
+}

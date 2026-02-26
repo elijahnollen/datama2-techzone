@@ -1,0 +1,110 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "_id",
+      "log_category",
+      "action_type",
+      "actor",
+      "target",
+      "timestamp"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "log_category": {
+        "bsonType": "string"
+      },
+      "action_type": {
+        "bsonType": "string"
+      },
+      "actor": {
+        "bsonType": "object",
+        "required": [
+          "actor_type",
+          "public_id"
+        ],
+        "properties": {
+          "actor_type": {
+            "bsonType": "string"
+          },
+          "public_id": {
+            "bsonType": "string"
+          }
+        }
+      },
+      "target": {
+        "bsonType": "object",
+        "required": [
+          "resource_type",
+          "resource_public_id"
+        ],
+        "properties": {
+          "resource_type": {
+            "bsonType": "string"
+          },
+          "resource_public_id": {
+            "bsonType": "string"
+          }
+        }
+      },
+      "state_transition": {
+        "bsonType": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "previous_state": {
+            "bsonType": "string"
+          },
+          "new_state": {
+            "bsonType": "string"
+          },
+          "delta": {
+            "bsonType": "double"
+          },
+          "quantity_added": {
+            "bsonType": "int"
+          },
+          "sale_public_id": {
+            "bsonType": "string"
+          },
+          "supplier_public_id": {
+            "bsonType": "string"
+          },
+          "customer_public_id": {
+            "bsonType": "string"
+          },
+          "employee_public_id": {
+            "bsonType": "string"
+          },
+          "payment_method": {
+            "bsonType": "string"
+          },
+          "payment_status": {
+            "bsonType": "string"
+          },
+          "payment_status_synced": {
+            "bsonType": "string"
+          },
+          "tracking_number": {
+            "bsonType": "string"
+          },
+          "return_method": {
+            "bsonType": "string"
+          },
+          "item_status": {
+            "bsonType": "string"
+          },
+          "estimated_refund": {
+            "bsonType": "double"
+          }
+        }
+      },
+      "timestamp": {
+        "bsonType": "string"
+      }
+    }
+  }
+}
